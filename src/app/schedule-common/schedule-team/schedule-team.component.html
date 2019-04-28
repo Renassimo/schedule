@@ -1,0 +1,185 @@
+<mat-accordion>
+
+    <mat-expansion-panel *ngFor="let team of usersByTeam; let i = index">
+        <mat-expansion-panel-header>
+          <mat-panel-title>{{ team.team }}</mat-panel-title>
+          <mat-panel-description>
+            <span>7:00 (Almina) - 21:00 (Abuzyar)</span>
+          </mat-panel-description>
+        </mat-expansion-panel-header>
+          
+        <div class="schedule-container mat-elevation-z8">
+            <table mat-table [dataSource]="usersByTeam[i].users">
+          
+              <!-- Position Column -->
+              <ng-container matColumnDef="position">
+                <th mat-header-cell *matHeaderCellDef> No. </th>
+                <td mat-cell *matCellDef="let element; let j = index"> {{j + 1}} </td>
+              </ng-container>
+          
+              <!-- Worker Column -->
+              <ng-container matColumnDef="name">
+                <th mat-header-cell *matHeaderCellDef class="worker-name"> Worker </th>
+                <td mat-cell *matCellDef="let element" class="worker-name">
+                  <a href="#"> {{element.name}} </a> <br> <i>{{element.position}} - {{element.room}} (40 of 40)</i>
+                </td>
+              </ng-container>
+          
+              <!-- Monday Column -->
+              <ng-container matColumnDef="mn">
+                <th mat-header-cell *matHeaderCellDef> Monday <br> 28 Jan. </th>
+                <td mat-cell *matCellDef="let element"
+                > {{element.week[0].timeIn}} - {{element.week[0].timeOut}} <br> 
+                <i>B: {{element.week[0].reakDuration}} H: {{element.week[0].duration}}
+                  <span matBadge="H" 
+                  matBadgeOverlap="false" matBadgePosition="above after"></span>
+                </i>
+                   </td>
+              </ng-container>
+          
+              <!-- Tuesday Column -->
+              <!-- <ng-container matColumnDef="tu">
+                <th mat-header-cell *matHeaderCellDef> Tuesday <br> 29 Jan. </th>
+                <td mat-cell *matCellDef="let element"> {{element.tu}} <br> <i>{{element.tu2}}</i> </td>
+              </ng-container> -->
+          
+              <!-- Wednesday Column -->
+              <!-- <ng-container matColumnDef="we">
+                <th mat-header-cell *matHeaderCellDef> Wednesday <br> 30 Jan. </th>
+                <td mat-cell *matCellDef="let element"> {{element.mn}} <br> <i>{{element.mn2}}</i> </td>
+              </ng-container> -->
+          
+              <!-- Thursday Column -->
+              <!-- <ng-container matColumnDef="th">
+                <th mat-header-cell *matHeaderCellDef> Thursday <br> 31 Jan. </th>
+                <td mat-cell *matCellDef="let element"> {{element.mn}} <br> <i>{{element.mn2}}</i> </td>
+              </ng-container> -->
+          
+              <!-- Friday Column -->
+              <!-- <ng-container matColumnDef="fr">
+                <th mat-header-cell *matHeaderCellDef> Friday <br> 1 Feb. </th>
+                <td mat-cell *matCellDef="let element"> {{element.mn}} <br> <i>{{element.mn2}}</i> </td>
+              </ng-container> -->
+          
+              <!-- Saturday Column -->
+              <!-- <ng-container matColumnDef="sa">
+                <th mat-header-cell *matHeaderCellDef> Saturday <br> 2 Feb. </th>
+                <td mat-cell *matCellDef="let element"> {{element.mn}} <br> <i>{{element.mn2}}</i> </td>
+              </ng-container> -->
+          
+              <!-- Sunday Column -->
+              <!-- <ng-container matColumnDef="su">
+                <th mat-header-cell *matHeaderCellDef> Sunday <br> 3 Feb. </th>
+                <td mat-cell *matCellDef="let element"> {{element.mn}} <br> <i>{{element.mn2}}</i> </td>
+              </ng-container> -->
+          
+              <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
+              <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+            </table>
+          </div>  
+          
+        </mat-expansion-panel>
+
+    <mat-expansion-panel>
+      <mat-expansion-panel-header>
+        <mat-panel-title>BDA Team 1</mat-panel-title>
+        <mat-panel-description>
+          <span>8:00 (Natalia) - 20:30 (Aida)</span>
+        </mat-panel-description>
+      </mat-expansion-panel-header>
+        
+      <!-- <div class="schedule-container mat-elevation-z8">
+          <table mat-table [dataSource]="dataSource">
+        
+            <ng-container matColumnDef="position">
+              <th mat-header-cell *matHeaderCellDef> No. </th>
+              <td mat-cell *matCellDef="let element"> {{element.position}} </td>
+            </ng-container>
+        
+            <ng-container matColumnDef="name">
+              <th mat-header-cell *matHeaderCellDef class="worker-name"> Worker </th>
+              <td mat-cell *matCellDef="let element" class="worker-name">
+                <a href="#"> {{element.name}} </a> <br> <i>Sr. BDA - 400 (40 of 40)</i>
+              </td>
+            </ng-container>
+        
+            <ng-container matColumnDef="mn">
+              <th mat-header-cell *matHeaderCellDef> Monday <br> 28 Jan. </th>
+              <td mat-cell *matCellDef="let element"> {{element.mn}} <br> <i>{{element.mn2}} 
+                <span matBadge="H" 
+                matBadgeOverlap="false" matBadgePosition="above after"></span>
+              </i>
+                 </td>
+            </ng-container>
+        
+            <ng-container matColumnDef="tu">
+              <th mat-header-cell *matHeaderCellDef> Tuesday <br> 29 Jan. </th>
+              <td mat-cell *matCellDef="let element"> {{element.tu}} <br> <i>{{element.tu2}}</i> </td>
+            </ng-container>
+        
+            <ng-container matColumnDef="we">
+              <th mat-header-cell *matHeaderCellDef> Wednesday <br> 30 Jan. </th>
+              <td mat-cell *matCellDef="let element"> {{element.mn}} <br> <i>{{element.mn2}}</i> </td>
+            </ng-container>
+        
+            <ng-container matColumnDef="th">
+              <th mat-header-cell *matHeaderCellDef> Thursday <br> 31 Jan. </th>
+              <td mat-cell *matCellDef="let element"> {{element.mn}} <br> <i>{{element.mn2}}</i> </td>
+            </ng-container>
+        
+            <ng-container matColumnDef="fr">
+              <th mat-header-cell *matHeaderCellDef> Friday <br> 1 Feb. </th>
+              <td mat-cell *matCellDef="let element"> {{element.mn}} <br> <i>{{element.mn2}}</i> </td>
+            </ng-container>
+        
+            <ng-container matColumnDef="sa">
+              <th mat-header-cell *matHeaderCellDef> Saturday <br> 2 Feb. </th>
+              <td mat-cell *matCellDef="let element"> {{element.mn}} <br> <i>{{element.mn2}}</i> </td>
+            </ng-container>
+        
+            <ng-container matColumnDef="su">
+              <th mat-header-cell *matHeaderCellDef> Sunday <br> 3 Feb. </th>
+              <td mat-cell *matCellDef="let element"> {{element.mn}} <br> <i>{{element.mn2}}</i> </td>
+            </ng-container>
+        
+            <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
+            <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+          </table>
+        </div>   -->
+  
+      </mat-expansion-panel>
+  
+      <mat-expansion-panel>
+      <mat-expansion-panel-header>
+        <mat-panel-title>BDA Team 2</mat-panel-title>
+        <mat-panel-description>
+          <span>7:00 (Alina) - 22:00 (Anna D.)</span>
+        </mat-panel-description>
+      </mat-expansion-panel-header>
+        
+        
+      </mat-expansion-panel>
+  
+      <mat-expansion-panel>
+      <mat-expansion-panel-header>
+        <mat-panel-title>BDA Team 3</mat-panel-title>
+        <mat-panel-description>
+          <span>9:00 (Regina M.) - 20:00 (Liana B.)</span>
+        </mat-panel-description>
+      </mat-expansion-panel-header>
+        
+        
+      </mat-expansion-panel>
+  
+      <mat-expansion-panel>
+          <mat-expansion-panel-header>
+            <mat-panel-title>TA Team KZN</mat-panel-title>
+            <mat-panel-description>
+              <span>7:00 (Almina) - 21:00 (Abuzyar)</span>
+            </mat-panel-description>
+          </mat-expansion-panel-header>
+            
+            
+          </mat-expansion-panel>  
+  
+  </mat-accordion>

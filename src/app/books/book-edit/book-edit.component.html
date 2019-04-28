@@ -1,0 +1,24 @@
+<div class="book-edit-container">
+    <mat-form-field>
+        <input matInput type="text" placeholder="Name">
+      </mat-form-field>
+      <mat-form-field>
+        <input matInput type="url" placeholder="Link">
+      </mat-form-field>
+      <mat-form-field>
+        <mat-select placeholder="Genre">
+          <mat-option *ngFor="let genre of genres" [value]="genre">
+            {{genre}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+      <mat-form-field>
+        <mat-select placeholder="Status">
+          <mat-option *ngFor="let status of statuses" [value]="status" [disabled]="status === 'Suggested'">
+            {{status}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+      <button mat-raised-button color="warn">Remove</button>
+      <button mat-raised-button color="primary">Save</button>
+</div>

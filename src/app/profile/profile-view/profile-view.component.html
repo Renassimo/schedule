@@ -1,0 +1,34 @@
+
+<div class="block-title contact-title">
+  <h5 class="block-title-text">Contact info</h5>
+</div>
+
+<div class="block-title skills-title">
+  <h5 class="block-title-text">Education & Skills</h5>
+</div>
+
+<div class="contact-photo sub-block">
+  <img src="{{user.image}}" alt="{{user.name}} {{user.surname}}" class="profile-photo">
+</div>
+
+<div class="contact-content sub-block">
+  <p>{{user.name}} {{user.surname}}</p>
+  <p>{{user.position}} - {{user.team}}</p>
+  <p><span class="type-name">Room: </span>{{user.room}}</p>
+  <p><span class="type-name">Birthday: </span>{{user.birthday}}</p>
+  <p><span class="type-name">Tel.: </span>{{user.tel}}</p>
+  <p><span class="type-name">Email: </span>{{user.email}}</p>
+</div>
+
+<div class="skills-content sub-block">
+  <p><span class="type-name">University: </span>{{user.university}}</p>
+  <p><span class="type-name">Faculty: </span>{{user.faculty}}</p>
+  <p><span class="type-name">Grade: </span>{{user.grade}}</p>
+  <p><span class="type-name">Education type: </span>{{user.eduType}}</p>
+  <p><span class="type-name">English level: </span>{{user.engLevel}}</p>
+  <p><span class="type-name">Skills: </span><span *ngFor="let skill of user.skills">{{skill}}, </span></p>
+</div>
+
+<a class="edit-button">
+  <mat-icon>edit</mat-icon>
+</a>

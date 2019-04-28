@@ -1,0 +1,43 @@
+<mat-accordion>
+
+
+<app-upcoming-events></app-upcoming-events>
+<app-suggested-events></app-suggested-events>
+<app-past-events></app-past-events>
+
+<mat-expansion-panel>
+    <mat-expansion-panel-header>
+      <mat-panel-title>Suggested the event</mat-panel-title>
+      <mat-panel-description>
+        <span></span>
+      </mat-panel-description>
+    </mat-expansion-panel-header>
+      
+    <div class="suggested-container">
+      <h4>The event 
+        "<b>Seth Low in Top Hop</b>" 
+        suggested</h4>
+    </div>
+    <div class="suggest-container">
+    <mat-form-field>
+      <input matInput [matDatepicker]="picker" placeholder="Date">
+      <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+      <mat-datepicker #picker ></mat-datepicker>
+    </mat-form-field>
+    <mat-form-field>
+      <input matInput type="text" placeholder="Name">
+    </mat-form-field>
+    <mat-form-field>
+      <input matInput type="url" placeholder="Place">
+    </mat-form-field>
+    <mat-form-field>
+      <input matInput type="url" placeholder="Type">
+    </mat-form-field>
+    <button mat-raised-button color="primary">Suggest</button>
+    </div>
+      
+    </mat-expansion-panel>
+
+</mat-accordion>
+
+<app-event-edit></app-event-edit>

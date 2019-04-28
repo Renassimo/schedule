@@ -1,0 +1,110 @@
+
+<div class="block-title contact-title">
+    <h5 class="block-title-text">Contact info</h5>
+  </div>
+  
+  <div class="block-title skills-title">
+    <h5 class="block-title-text">Education & Skills</h5>
+  </div>
+  
+  <div class="contact-photo sub-block" style="text-align: right">
+    <img src="../../../assets/Abuzyar.png" alt="Abuzyar Tazetdinov" class="profile-photo">
+    <br>
+    <button mat-raised-button (click)="openBottomSheet()">Change photo</button>
+  </div>
+  
+  <div class="contact-content sub-block">
+    <mat-form-field>
+      <input matInput placeholder="Name" type="text" value="Abuzyar">
+    </mat-form-field>
+    <mat-form-field>
+      <input matInput placeholder="Surname" type="text" value="Tazetdinov">
+    </mat-form-field>
+    <mat-form-field>
+      <mat-select placeholder="Position">
+        <mat-option *ngFor="let position of positions" [value]="position">
+          {{ position }}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+    <mat-form-field>
+      <mat-select placeholder="Team">
+        <mat-option *ngFor="let team of teams" [value]="team">
+          {{ team }}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+    <mat-form-field>
+      <mat-select placeholder="Room">
+        <mat-option *ngFor="let room of rooms" [value]="room">
+          {{ room }}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+    <mat-form-field class="form-fix-width">
+      <input matInput [matDatepicker]="birthdayDate" placeholder="Birthday">
+      <mat-datepicker-toggle matSuffix [for]="birthdayDate"></mat-datepicker-toggle>
+      <mat-datepicker #birthdayDate startView="multi-year" [startAt]="startDate"></mat-datepicker>
+    </mat-form-field>
+    <mat-form-field>
+      <input matInput placeholder="Phone" type="tel" value="+7 939 337 27 26">
+    </mat-form-field>
+    <mat-form-field>
+      <input matInput placeholder="Email" type="email" value="abuzyar.tazetdinov@zoominfo.com">
+    </mat-form-field>
+    <mat-form-field>
+      <mat-select placeholder="Access level">
+        <mat-option *ngFor="let accessLevel of accessLevels" [value]="accessLevel">
+          {{ accessLevel }}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+  </div>
+  
+  <div class="skills-content sub-block">
+    <mat-form-field>
+      <input matInput placeholder="University" type="text" value="KATK">
+    </mat-form-field>
+    <mat-form-field>
+      <input matInput placeholder="Faculty" type="text" value="Information Systems">
+    </mat-form-field>
+    <mat-form-field>
+      <input matInput placeholder="Grade" type="text" value="4th course">
+    </mat-form-field>
+    <mat-form-field>
+      <mat-select placeholder="Education type">
+        <mat-option *ngFor="let eduType of eduTypes" [value]="eduType">
+          {{ eduType }}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+    <mat-form-field>
+      <mat-select placeholder="English level">
+        <mat-option *ngFor="let engLevel of engLevels" [value]="engLevel">
+          {{ engLevel }}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+    <br>
+    <mat-form-field class="skills-chip-list">
+      <mat-chip-list #chipList>
+        <mat-chip *ngFor="let skill of skills" [selectable]="selectable"
+                 [removable]="removable" (removed)="remove(skill)">
+          {{skill.name}}
+          <mat-icon matChipRemove *ngIf="removable">cancel</mat-icon>
+        </mat-chip>
+        <input placeholder="Skills"
+               [matChipInputFor]="chipList"
+               [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+               [matChipInputAddOnBlur]="addOnBlur"
+               (matChipInputTokenEnd)="add($event)"
+               >
+      </mat-chip-list>
+    </mat-form-field>
+    <div style="text-align: right">
+      <button mat-raised-button color="warn" style="margin-right: 30px">Remove</button>
+      <button mat-raised-button>Cancel</button>
+      <button mat-raised-button color="primary" style="margin-left: 10px">Save</button>
+    </div>
+  </div>
+  

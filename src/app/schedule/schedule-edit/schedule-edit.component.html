@@ -1,0 +1,36 @@
+<br>
+<mat-form-field>
+  <mat-select placeholder="Day type">
+    <mat-option *ngFor="let dayType of dayTypes" [value]="dayType">
+      {{dayType}}
+    </mat-option>
+  </mat-select>
+</mat-form-field>
+<br>
+<mat-form-field>
+  <mat-select placeholder="In">
+    <mat-option *ngFor="let time of times" [value]="time.value">
+      {{time.viewValue}}
+    </mat-option>
+  </mat-select>
+</mat-form-field>
+<br>
+<mat-form-field>
+  <mat-select placeholder="Out">
+    <mat-option *ngFor="let time of times" [value]="time.value">
+      {{time.viewValue}}
+    </mat-option>
+  </mat-select>
+</mat-form-field>
+<br>
+<mat-form-field>
+  <mat-select placeholder="Lunch">
+    <mat-option *ngFor="let time of times" [value]="time.value">
+      {{time.viewValue}}
+    </mat-option>
+  </mat-select>
+</mat-form-field>
+<br>
+<mat-form-field>
+    <textarea matInput placeholder="Notes"></textarea>
+</mat-form-field>

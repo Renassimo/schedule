@@ -1,0 +1,16 @@
+<mat-accordion>
+<mat-expansion-panel>
+    <mat-expansion-panel-header>
+      <mat-panel-title>Profile</mat-panel-title>
+      <mat-panel-description>
+        <span>{{user.name}} {{user.surname}}</span>
+        <img src="{{user.image}}" alt="{{user.name}} {{user.surname}}" class="header-photo">
+      </mat-panel-description>
+    </mat-expansion-panel-header>
+
+  <app-profile-view class="content-block"></app-profile-view>
+  <!-- <app-profile-edit class="content-block"></app-profile-edit> -->
+
+</mat-expansion-panel>
+<app-schedule></app-schedule>
+</mat-accordion>

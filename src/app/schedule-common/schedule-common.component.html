@@ -1,0 +1,34 @@
+<div class="schedule-options content-toolbar">
+  <div class="datepicker-wrapper content-toolbar-item">
+    <div class="change-week change-week-left"><mat-icon>chevron_left</mat-icon></div>
+    <mat-form-field>
+      <input matInput [matDatepicker]="picker" placeholder="Jump to date">
+      <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+      <mat-datepicker #picker ></mat-datepicker>
+    </mat-form-field>
+    <div class="change-week change-week-right"><mat-icon>chevron_right</mat-icon></div>
+  </div>
+  <div class="sorter-wrapper content-toolbar-item">
+    <mat-radio-group
+    class="sorter-radio-group"
+    [(ngModel)]="sorterChosen">
+    <span>Sort by: </span>
+      <mat-radio-button
+      class="sorter-radio-button"
+      *ngFor="let sorter of sorters"
+      [value]="sorter"
+      style="margin-left: 10px">
+        {{ sorter }}
+      </mat-radio-button>
+    </mat-radio-group>
+  </div>
+  <div class="content-toolbar-item">
+    <span>Workers: 34 (39), 7:30 - 22:00</span>
+  </div>
+</div>
+
+<br>
+
+<app-schedule-room *ngIf="sorterChosen === 'Room'"></app-schedule-room>
+<app-schedule-team *ngIf="sorterChosen === 'Team'"></app-schedule-team>
+<app-schedule-position *ngIf="sorterChosen === 'Position'"></app-schedule-position>

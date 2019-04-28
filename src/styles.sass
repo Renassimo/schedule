@@ -1,1 +1,52 @@
-/* You can add global styles to this file, and also import other style files */
+// Material theme
+@import "~@angular/material/prebuilt-themes/deeppurple-amber.css"
+// Bootstrap breakpoints
+@import "app/shared/mixins/_functions.scss"
+@import "app/shared/mixins/_variables.scss"
+@import "app/shared/mixins/_breakpoints.scss"
+
+
+.container
+    margin: 0 auto
+    width: 92%
+    @include media-breakpoint-up(sm)
+        width: 540px
+    @include media-breakpoint-up(md)
+        width: 720px
+    @include media-breakpoint-up(lg)
+        width: 960px
+    @include media-breakpoint-up(xl)
+        width: 1140px
+
+.content-block
+    display: grid
+.block-title-text
+    margin: 10px 0
+
+.edit-button
+    cursor: pointer
+    opacity: 0.20
+    &:hover
+        opacity: 1
+
+.day-time-block
+    .mat-form-field-infix
+        min-width: 120px !important
+        width: 120px !important
+
+mat-expansion-panel-header
+    mat-panel-description, mat-panel-title
+        display: flex
+        justify-content: space-between
+        align-items: center
+    mat-panel-title
+        max-width: 250px
+
+.form-fix-width
+    .mat-form-field-flex
+        position: relative
+        .mat-form-field-suffix
+            position: relative
+            // right: 21px
+    .mat-form-field-underline
+        // width: 170px !important
