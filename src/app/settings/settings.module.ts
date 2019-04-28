@@ -35,7 +35,7 @@ import { ReactiveFormsModule } from "@angular/forms";
         ReactiveFormsModule,
         MatPaginatorModule,
         MatChipsModule,
-        MatListModule,
+        MatListModule
     ]
 })
 export class SettingsModule {}

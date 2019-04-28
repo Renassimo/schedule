@@ -13,7 +13,8 @@ import {
     MatSelectModule,
     MatTableModule,
     MatPaginatorModule,
-    MatDatepickerModule
+    MatDatepickerModule,
+    MatNativeDateModule
 } from '@angular/material';
 import { EventsRoutingModule } from './events-routing.module';
 import { CommonModule } from '@angular/common';
@@ -39,7 +40,8 @@ import { ReactiveFormsModule } from '@angular/forms';
         MatSelectModule,
         MatTableModule,
         ReactiveFormsModule,
-        MatPaginatorModule
+        MatPaginatorModule,
+        MatNativeDateModule
     ]
 })
 export class EventsModule {}

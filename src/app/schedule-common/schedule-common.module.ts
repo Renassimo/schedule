@@ -15,7 +15,8 @@ import {
     MatDatepickerModule,
     MatChipsModule,
     MatListModule,
-    MatRadioModule
+    MatRadioModule,
+    MatNativeDateModule
 } from '@angular/material';
 import { CommonModule } from "@angular/common";
 import { ScheduleCommonRoutingModule } from "./schedule-common-routing.module";
@@ -45,6 +46,7 @@ import { ReactiveFormsModule, FormsModule } from "@angular/forms";
         MatListModule,
         MatRadioModule,
         FormsModule,
+        MatNativeDateModule
     ],
 })
 export class ScheduleCommonModule {}

@@ -16,7 +16,8 @@ import {
     MatPaginatorModule,
     MatDatepickerModule,
     MatChipsModule,
-    MatListModule
+    MatListModule,
+    MatNativeDateModule
 } from '@angular/material';
 import { CommonModule } from "@angular/common";
 import { ProfileRoutingModule } from "./profile-routing.module";
@@ -47,6 +48,7 @@ import { ReactiveFormsModule } from "@angular/forms";
         MatPaginatorModule,
         MatChipsModule,
         MatListModule,
+        MatNativeDateModule
     ],
     entryComponents: [
       ProfileEditComponent,
