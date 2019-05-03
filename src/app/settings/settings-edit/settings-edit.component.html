@@ -1,0 +1,70 @@
+
+<div class="wrapper" *ngIf="showPage"><div class="wrapper-container">
+  <div cdkDropList class="sort-list form-item" (cdkDropListDropped)="drop($event)">
+    <div
+    class="sort-box"
+    *ngFor="let setItem of set; let i = index"
+    cdkDrag
+    >
+    <span>{{setItem}}</span>
+    <div class="button-row">
+      <button mat-button (click)="onDelete(i)"><mat-icon>close</mat-icon></button>
+      <button mat-button (click)="onStartEdit(i)"><mat-icon>edit</mat-icon></button>
+      <!-- <button mat-button class="drag-handle" cdkDragHandle><mat-icon>drag_indicator</mat-icon></button> -->
+      <mat-icon class="drag-handle" cdkDragHandle>drag_indicator</mat-icon>
+    </div>
+    </div>
+  </div>
+  <ng-template [ngIf]="!editMode">
+    <mat-form-field class="form-item new">
+      <input
+      [formControl]="newSetItemForm"
+      matInput
+      type="text"
+      placeholder="Add new"
+      id="new">
+      <button
+      mat-button
+      matSuffix
+      mat-icon-button
+      *ngIf="newSetItemForm.value"
+      aria-label="Clear"
+      (click)="onClearInput()">
+        <mat-icon>close</mat-icon>
+      </button>
+    </mat-form-field>
+    <button
+    mat-raised-button
+    class="form-item"
+    (click)="onAdd()"
+    [disabled]="newSetItemForm.invalid"
+    >Add</button>
+  </ng-template>
+  <ng-template [ngIf]="editMode">
+    <mat-form-field class="form-item edit">
+      <input
+      [formControl]="editSetItemForm"
+      matInput
+      type="text"
+      placeholder="Edit"
+      id="edit">
+      <button
+      mat-button
+      matSuffix
+      mat-icon-button
+      *ngIf="editSetItemForm.value"
+      aria-label="Clear"
+      (click)="onClearInput()">
+        <mat-icon>close</mat-icon>
+      </button>
+    </mat-form-field>
+    <button
+    mat-raised-button
+    class="form-item"
+    (click)="onEdit()"
+    [disabled]="editSetItemForm.invalid"
+    >Edit</button>
+  </ng-template>
+  <button mat-raised-button class="form-item" color="warn" (click)="onCancel()">Cancel all changes</button>
+  <button mat-raised-button class="form-item" (click)="onSave()" color="primary">Save all changes</button>
+</div></div>

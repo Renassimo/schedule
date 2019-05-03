@@ -10,9 +10,13 @@ import {MatIconModule} from '@angular/material/icon';
 
 import { HeaderComponent } from './header/header.component';
 
-import { UserService } from './shared/user.service';
+import { ProfileService } from './shared/profile.service';
 import { ScheduleService } from './shared/schedule.service';
 import { AppRoutingModule } from './app-routing.module';
+import { UsersService } from './shared/users.service';
+import { AuthService } from './auth/auth.service';
+import { StatusService } from './shared/status.service';
+import { SettingsService } from './settings/settings.service';
 
 @NgModule({
   declarations: [
@@ -27,7 +31,7 @@ import { AppRoutingModule } from './app-routing.module';
     MatMenuModule,
     MatIconModule,
   ],
-  providers: [UserService, ScheduleService],
+  providers: [ProfileService, UsersService, ScheduleService, AuthService, StatusService, SettingsService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

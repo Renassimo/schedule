@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { UserService } from 'src/app/shared/user.service';
+import { ProfileService } from 'src/app/shared/profile.service';
 import { ScheduleService } from 'src/app/shared/schedule.service';
+import { UsersService } from 'src/app/shared/users.service';
 
 @Component({
   selector: 'app-schedule-team',
@@ -20,13 +21,13 @@ export class ScheduleTeamComponent implements OnInit {
   date: Date;
 
   constructor(
-    private userService: UserService,
+    private usersService: UsersService,
     private scheduleService: ScheduleService
   ) { }
 
   ngOnInit() {
     this.date = new Date(2019, 2, 1, 0, 0, 0, 0);
-    this.usersByTeam = this.userService.getUsersByTeam();
+    this.usersByTeam = this.usersService.getUsersByTeam();
     this.getUsersWeeks();
     console.log(this.usersByTeam);
   }

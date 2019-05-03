@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { User } from '../shared/user.model';
-import { UserService } from '../shared/user.service';
+import { Profile } from '../shared/profile.model';
+import { ProfileService } from '../shared/profile.service';
 
 @Component({
   selector: 'app-profile',
@@ -11,14 +11,14 @@ import { UserService } from '../shared/user.service';
 export class ProfileComponent implements OnInit {
 
   userId: number;
-  user: User;
+  user: Profile;
 
   constructor(private route: ActivatedRoute,
-    private userService: UserService) { }
+    private profileService: ProfileService) { }
 
   ngOnInit() {
     this.userId = this.route.snapshot.params['id'];
-    this.user = this.userService.getUser(this.userId);
+    this.user = this.profileService.getUser(this.userId);
     // console.log(this.user);
   }
 

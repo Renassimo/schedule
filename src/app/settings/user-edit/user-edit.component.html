@@ -1,0 +1,112 @@
+<form [formGroup]="userForm" (ngSubmit)="onSubmit()" *ngIf="isAuthenticated()">
+  <div class="form-wrapper">
+  <mat-form-field class="form-item name">
+    <input
+    matInput
+    type="text"
+    placeholder="Name"
+    id="name"
+    formControlName="name">
+    <button
+    mat-button
+    matSuffix
+    mat-icon-button
+    *ngIf="userForm.value.name"
+    aria-label="Clear"
+    (click)="onClearInput('name', true)">
+      <mat-icon>close</mat-icon>
+    </button>
+  </mat-form-field>
+  <mat-form-field class="form-item surname">
+    <input
+    matInput
+    type="text"
+    placeholder="Surname"
+    id="surname"
+    formControlName="surname">
+    <button
+    mat-button
+    matSuffix
+    mat-icon-button
+    *ngIf="userForm.value.surname"
+    aria-label="Clear"
+    (click)="onClearInput('surname', true)">
+      <mat-icon>close</mat-icon>
+    </button>
+  </mat-form-field>
+  <mat-form-field class="form-item uid">
+    <input
+    matInput
+    type="text"
+    placeholder="Uid"
+    id="uid"
+    formControlName="uid">
+    <button
+    mat-button
+    matSuffix
+    mat-icon-button
+    *ngIf="userForm.value.uid"
+    aria-label="Clear"
+    (click)="onClearInput('uid', true)">
+      <mat-icon>close</mat-icon>
+    </button>
+  </mat-form-field>
+  <mat-form-field class="form-item team">
+    <mat-label>Team</mat-label>
+    <mat-select 
+    id="team"
+    formControlName="team">
+      <mat-option *ngFor="let team of sets.teams" [value]="team">
+        {{team}}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+  <mat-form-field class="form-item position">
+    <mat-label>Position</mat-label>
+    <mat-select 
+    id="position"
+    formControlName="position">
+      <mat-option *ngFor="let position of sets.positions" [value]="position">
+        {{position}}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+  <mat-form-field class="form-item room">
+    <mat-label>Room</mat-label>
+    <mat-select 
+    id="room"
+    formControlName="room">
+      <mat-option *ngFor="let room of sets.rooms" [value]="room">
+        {{room}}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+  <mat-form-field class="form-item uLevel">
+    <mat-label>User level</mat-label>
+    <mat-select 
+    id="uLevel"
+    formControlName="uLevel">
+      <mat-option *ngFor="let uLevel of uLevels" [value]="uLevel.value">
+        {{uLevel.viewValue}}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+  <mat-slide-toggle class="form-item active"
+  #tg
+  formControlName="active"
+  >{{tg.checked ? 'active' : 'not active'}}</mat-slide-toggle>
+  <button
+  class="form-item button"
+  mat-raised-button
+  (click)="onCancel()"
+  color="warn"
+  >Cancel</button>
+  <button
+  class="form-item button"
+  mat-raised-button
+  type="submit"
+  [disabled]="userForm.invalid"
+  color="primary"
+  >Save</button>
+  </div>
+</form>

@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { User } from '../shared/user.model';
+import { Profile } from '../shared/profile.model';
 import { ActivatedRoute } from '@angular/router';
-import { UserService } from '../shared/user.service';
+import { ProfileService } from '../shared/profile.service';
 import { ScheduleService } from '../shared/schedule.service';
 import { FormControl } from '@angular/forms';
 
@@ -16,7 +16,7 @@ export class ScheduleComponent implements OnInit {
   dayNames = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
   monthNames = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
   userId: number;
-  user: User;
+  user: Profile;
   // today: Date;
   date: Date;
   week;
@@ -28,7 +28,7 @@ export class ScheduleComponent implements OnInit {
 
   constructor(
     private route: ActivatedRoute,
-    private userService: UserService,
+    private profileService: ProfileService,
     private scheduleService: ScheduleService
     ) { }
 
@@ -37,7 +37,7 @@ export class ScheduleComponent implements OnInit {
     this.date = new Date(2019, 2, 1, 0, 0, 0, 0);
     this.datePicker = new FormControl(this.date);
     this.userId = this.route.snapshot.params['id'];
-    this.user = this.userService.getUser(this.userId);
+    this.user = this.profileService.getUser(this.userId);
     // console.log(this.user);
     this.week = this.scheduleService.getUserWeek(this.userId, this.date);
     this.weekHours = this.getWeekHours(this.week);

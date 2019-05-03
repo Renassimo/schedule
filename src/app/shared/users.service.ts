@@ -1,69 +1,81 @@
-import { User } from "./user.model";
 import { Injectable } from "@angular/core";
+import { User } from "./user.model";
+import { Subject } from "rxjs";
+import * as firebase from 'firebase/app';
+import 'firebase/firestore';
+import { Router } from "@angular/router";
 
 @Injectable()
-export class UserService {
+export class UsersService {
+
+    usersChanged = new Subject<User[]>();
 
     private users: User[] = [
 
-        new User(0, 0, 'Renas', 'Sitdikov', 'TA Team KZN', 'Jr. TA', '405 (Central Perk)',
-        '19 April', '+7 917 265 72 16', 'renas.sitdikov@zoominfo.com',
-        'KSPEU', 'Industrial Heat Power Engineering', 'Master', 'Graduated',
-        'B1 (Intermediate English)',
-        ['HTML', 'CSS', 'JS', 'Angular'],
-        '../../../assets/000.jpg'),
+        // new Users(0, 'YrXvgjMVC4etMj3nR1wr7D81FZe2', 'Tony', 'Stark',
+        // 'TA Team KZN', 'Jr. TA', '405 (Central Perk)', 0),
 
-        new User(1, 1, 'Rustam', 'Akhmadullin', 'Management Team', 'Director', '400 (Cupola)',
-        '14 June', '+7 905 038 25 90', 'rustam.akhmadullin@zoominfo.com',
-        '', '', 'Specialist', 'Graduated',
-        'B2 (Upper-Intermediate English)',
-        [],
-        '../../../assets/001.jpg'),
+        // new Users(1, 'U1qf5cxU7GXroI9jAaxW1o1wjUr2', 'Nick', 'Fury',
+        // 'Management Team', 'Director', '400 (Cupola)', 1),
 
-        new User(2, 3, 'Abuzyar', 'Tazetdinov', 'TA Team KZN', 'Jr. TA', '405 (Central Perk)',
-        '18 October', '+7 939 337 27 26', 'abuzyar.tazetdinov@zoominfo.com',
-        'KATK', 'Information Systems', '4th course', 'Full time',
-        'A2 (Elementary English)',
-        ['HTML', 'CSS', 'JS', 'Python', 'MySQL'],
-        '../../../assets/002.jpg'),
+        // new Users(2, 'FNdCPsDjyxbu7R18iJb7nuon9Tw2', 'Peter', 'Parker',
+        // 'TA Team KZN', 'Jr. TA', '405 (Central Perk)', 3),
 
-        new User(3, 2, 'Anastasia', 'Titarenko', 'Management Team', 'HR', '400 (Cupola)',
-        '31 October', '+7 987 069 82 39', 'anastasia.titarenko@zoominfo.com',
-        '', '', '', 'Graduated',
-        'B1 (Intermediate English)',
-        [],
-        '../../../assets/003.jpg'),
+        // new Users(3, 'RtGsY4MFTOWODWtta7SWMFfv6Cr1', 'Maria', 'Hill',
+        // 'Management Team', 'HR', '400 (Cupola)', 2),
 
-        new User(4, 2, 'Nikita', 'Rusin', 'TA Team KZN', 'Jr. TA', '405 (Central Perk)',
-        '15 February', '+7 937 770 04 48', 'nikita.rusin@zoominfo.com',
-        'Kazan Federal University', 'Software Engineering', '2nd course Master', 'Part time',
-        'A2 (Elementary English)',
-        [],
-        '../../../assets/004.jpg'),
+        // new Users(4, '27WKETG7gnd5F9yuOk0XRPJkrBO2', 'Bruce', 'Banner',
+        // 'TA Team KZN', 'Jr. TA', '405 (Central Perk)', 2),
 
-        new User(5, 2, 'Alexandra', 'Lipova', 'BDA Team 2', 'Sr. BDA', '402',
-        '30 May', '+7 917 246 58 66', 'alexandra.lipova@zoominfo.com',
-        'Kazan Federal University', 'Enviromental management and water engineering', 'Master', 'Graduated',
-        'B2 (Upper-Intermediate English)',
-        [],
-        '../../../assets/005.jpg'),
+        // new Users(5, 'eFs8ioVt8kO8NexepW5ir0iIa8x1', 'Wanda', 'Maximoff',
+        // 'BDA Team 1', 'Sr. BDA', '402', 2),
 
-        new User(6, 3, 'Regina', 'Mardanshina', 'BDA Team 2', 'BDA', '402',
-        '3 July', '+7 937 574 79 16', 'Regina.Mardanshina@zoominfo.com',
-        'Kazan Federal University', '', '3rd course', 'Full Time',
-        'A2 (Elementary English)',
-        [],
-        '../../../assets/006.jpg'),
+        // new Users(6, 'rQNoHnO6HNgvyLaTCjEJyfqQFYG3', 'Neena', 'Thurman',
+        // 'BDA Team 1', 'BDA', '402', 3),
 
-        new User(7, 3, 'Diana', 'Sabirzanova', 'BDA Team 2', 'Jr. BDA', '402',
-        '23 May', '+7 950 321 47 63', 'diana.sabirzanova@zoominfo.com',
-        'Kazan State Agrarian University', 'Forestry and ecology faculty', '4th course', 'Full Time',
-        'A2 (Elementary English)',
-        [],
-        '../../../assets/007.jpg'),
+        // new Users(7, 'WJmmtOmobRgKlB5jMJ8qBpAHRDo2', 'Gamora', 'Zen Whoberi',
+        // 'BDA Team 1', 'Jr. BDA', '402', 3),
 
     ];
 
+    constructor (
+        private router: Router
+    ) {}
+
+    fetchUsers() {
+        let db = firebase.firestore();
+        db.collection('users').orderBy('id', 'asc')
+        .onSnapshot(
+            querySnapshot => {
+                let users = [];
+                querySnapshot.forEach(
+                    doc => {
+                    console.log(doc.data());
+                    users.push(doc.data());
+                    }
+                );
+                console.log(users);
+                this.setUsers(users);
+            }
+        );
+    }
+    updateUser(doc, data) {
+        let db = firebase.firestore();
+        db.collection('users').doc(doc).set(data)
+        .then(() => {
+            console.log('Document successfully written!');
+            this.router.navigate(['/settings/users']);
+        })
+        .catch((error) => console.error('Error writing document: ', error));
+
+    }
+    setUsers(users) {
+        this.users = users;
+        this.usersChanged.next(this.users.slice());
+    }
+    getUsersLength() {
+        return this.users.length;
+    }
     getUsers() {
         return this.users.slice();
     }
