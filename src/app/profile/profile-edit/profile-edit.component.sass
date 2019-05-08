@@ -1,11 +1,36 @@
-@import "../profile-view/profile-view.component.sass"
 
-$formWidth: 180px
-$formMR: 10px
+// Bootstrap breakpoints
+@import "../../shared/mixins/_functions.scss"
+@import "../../shared/mixins/_variables.scss"
+@import "../../shared/mixins/_breakpoints.scss"
 
-mat-form-field
-    margin-right: $formMR
-    width: $formWidth
-    &.skills-chip-list
-        min-width: 100%
-        max-width: $formWidth + $formWidth + $formMR
+form
+    width: 100%
+    display: flex
+    justify-content: center
+    margin-top: 16px
+.form-wrapper
+    display: grid
+    width: 100%
+    max-width: 300px
+    grid-template-columns: auto
+    grid-gap: 10px
+    .form-item
+        width: 100%
+    @include media-breakpoint-up(lg)
+        max-width: 500px
+        grid-template-columns: 1fr 1fr
+        .form-item.email
+            grid-column: 1 / 3
+        .form-item.university
+            grid-column: 1 / 3
+        .form-item.faculty
+            grid-column: 1 / 3
+        .form-item.engLevel
+            grid-column: 1 / 3
+        .form-item.skills
+            grid-column: 1 / 3
+        .form-item.image
+            grid-column: 1 / 3
+        .form-item.button
+            grid-column: 1 / 3

@@ -37,7 +37,7 @@ export class ScheduleComponent implements OnInit {
     this.date = new Date(2019, 2, 1, 0, 0, 0, 0);
     this.datePicker = new FormControl(this.date);
     this.userId = this.route.snapshot.params['id'];
-    this.user = this.profileService.getUser(this.userId);
+    // this.user = this.profileService.getUser(this.userId);
     // console.log(this.user);
     this.week = this.scheduleService.getUserWeek(this.userId, this.date);
     this.weekHours = this.getWeekHours(this.week);

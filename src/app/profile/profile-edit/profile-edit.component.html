@@ -1,110 +1,81 @@
-
-<div class="block-title contact-title">
-    <h5 class="block-title-text">Contact info</h5>
-  </div>
-  
-  <div class="block-title skills-title">
-    <h5 class="block-title-text">Education & Skills</h5>
-  </div>
-  
-  <div class="contact-photo sub-block" style="text-align: right">
-    <img src="../../../assets/Abuzyar.png" alt="Abuzyar Tazetdinov" class="profile-photo">
-    <br>
-    <button mat-raised-button (click)="openBottomSheet()">Change photo</button>
-  </div>
-  
-  <div class="contact-content sub-block">
-    <mat-form-field>
-      <input matInput placeholder="Name" type="text" value="Abuzyar">
+<form [formGroup]="profileForm" (ngSubmit)="onSubmit()" *ngIf="isAuthenticated()">
+  <div class="form-wrapper">
+    <mat-form-field class="form-item birthday">
+      <input matInput [matDatepicker]="datePicker" placeholder="Birthday" id="birthday" formControlName="birthday">
+      <mat-datepicker-toggle matSuffix [for]="datePicker"></mat-datepicker-toggle>
+      <mat-datepicker #datePicker></mat-datepicker>
     </mat-form-field>
-    <mat-form-field>
-      <input matInput placeholder="Surname" type="text" value="Tazetdinov">
+    <mat-form-field class="form-item tel">
+      <input matInput type="text" placeholder="Contact number" id="tel" formControlName="tel">
+      <button mat-button matSuffix mat-icon-button *ngIf="profileForm.value.tel" aria-label="Clear"
+        (click)="onClearInput('tel')">
+        <mat-icon>close</mat-icon>
+      </button>
     </mat-form-field>
-    <mat-form-field>
-      <mat-select placeholder="Position">
-        <mat-option *ngFor="let position of positions" [value]="position">
-          {{ position }}
+    <mat-form-field class="form-item email">
+      <input matInput type="text" placeholder="Email" id="email" formControlName="email">
+      <button mat-button matSuffix mat-icon-button *ngIf="profileForm.value.email" aria-label="Clear"
+        (click)="onClearInput('email', true)">
+        <mat-icon>close</mat-icon>
+      </button>
+    </mat-form-field>
+    <mat-form-field class="form-item university">
+      <input matInput type="text" placeholder="University" id="university" formControlName="university">
+      <button mat-button matSuffix mat-icon-button *ngIf="profileForm.value.university" aria-label="Clear"
+        (click)="onClearInput('university')">
+        <mat-icon>close</mat-icon>
+      </button>
+    </mat-form-field>
+    <mat-form-field class="form-item faculty">
+      <input matInput type="text" placeholder="Faculty" id="faculty" formControlName="faculty">
+      <button mat-button matSuffix mat-icon-button *ngIf="profileForm.value.faculty" aria-label="Clear"
+        (click)="onClearInput('faculty')">
+        <mat-icon>close</mat-icon>
+      </button>
+    </mat-form-field>
+    <mat-form-field class="form-item grade">
+      <input matInput type="text" placeholder="Deegre / course" id="grade" formControlName="grade">
+      <button mat-button matSuffix mat-icon-button *ngIf="profileForm.value.grade" aria-label="Clear"
+        (click)="onClearInput('grade')">
+        <mat-icon>close</mat-icon>
+      </button>
+    </mat-form-field>
+    <mat-form-field class="form-item eduType">
+      <mat-label>Education type</mat-label>
+      <mat-select id="eduType" formControlName="eduType">
+        <mat-option *ngFor="let eduType of sets.edutypes" [value]="eduType">
+          {{eduType}}
         </mat-option>
       </mat-select>
     </mat-form-field>
-    <mat-form-field>
-      <mat-select placeholder="Team">
-        <mat-option *ngFor="let team of teams" [value]="team">
-          {{ team }}
+    <mat-form-field class="form-item engLevel">
+      <mat-label>English level</mat-label>
+      <mat-select id="engLevel" formControlName="engLevel">
+        <mat-option *ngFor="let engLevel of sets.englevels" [value]="engLevel">
+          {{engLevel}}
         </mat-option>
       </mat-select>
     </mat-form-field>
-    <mat-form-field>
-      <mat-select placeholder="Room">
-        <mat-option *ngFor="let room of rooms" [value]="room">
-          {{ room }}
-        </mat-option>
-      </mat-select>
-    </mat-form-field>
-    <mat-form-field class="form-fix-width">
-      <input matInput [matDatepicker]="birthdayDate" placeholder="Birthday">
-      <mat-datepicker-toggle matSuffix [for]="birthdayDate"></mat-datepicker-toggle>
-      <mat-datepicker #birthdayDate startView="multi-year" [startAt]="startDate"></mat-datepicker>
-    </mat-form-field>
-    <mat-form-field>
-      <input matInput placeholder="Phone" type="tel" value="+7 939 337 27 26">
-    </mat-form-field>
-    <mat-form-field>
-      <input matInput placeholder="Email" type="email" value="abuzyar.tazetdinov@zoominfo.com">
-    </mat-form-field>
-    <mat-form-field>
-      <mat-select placeholder="Access level">
-        <mat-option *ngFor="let accessLevel of accessLevels" [value]="accessLevel">
-          {{ accessLevel }}
-        </mat-option>
-      </mat-select>
-    </mat-form-field>
-  </div>
-  
-  <div class="skills-content sub-block">
-    <mat-form-field>
-      <input matInput placeholder="University" type="text" value="KATK">
-    </mat-form-field>
-    <mat-form-field>
-      <input matInput placeholder="Faculty" type="text" value="Information Systems">
-    </mat-form-field>
-    <mat-form-field>
-      <input matInput placeholder="Grade" type="text" value="4th course">
-    </mat-form-field>
-    <mat-form-field>
-      <mat-select placeholder="Education type">
-        <mat-option *ngFor="let eduType of eduTypes" [value]="eduType">
-          {{ eduType }}
-        </mat-option>
-      </mat-select>
-    </mat-form-field>
-    <mat-form-field>
-      <mat-select placeholder="English level">
-        <mat-option *ngFor="let engLevel of engLevels" [value]="engLevel">
-          {{ engLevel }}
-        </mat-option>
-      </mat-select>
-    </mat-form-field>
-    <br>
-    <mat-form-field class="skills-chip-list">
+    <mat-form-field class="form-item skills">
       <mat-chip-list #chipList>
-        <mat-chip *ngFor="let skill of skills" [selectable]="selectable"
-                 [removable]="removable" (removed)="remove(skill)">
-          {{skill.name}}
-          <mat-icon matChipRemove *ngIf="removable">cancel</mat-icon>
+        <mat-chip *ngFor="let skill of skills" [selectable]="chips.selectable" [removable]="chips.removable"
+          (removed)="remove(skill)">
+          {{skill}}
+          <mat-icon matChipRemove *ngIf="chips.removable">cancel</mat-icon>
         </mat-chip>
-        <input placeholder="Skills"
-               [matChipInputFor]="chipList"
-               [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
-               [matChipInputAddOnBlur]="addOnBlur"
-               (matChipInputTokenEnd)="add($event)"
-               >
+        <input placeholder="Skills" [matChipInputFor]="chipList" [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+          [matChipInputAddOnBlur]="chips.addOnBlur" (matChipInputTokenEnd)="add($event)">
       </mat-chip-list>
     </mat-form-field>
-    <div style="text-align: right">
-      <button mat-raised-button color="warn" style="margin-right: 30px">Remove</button>
-      <button mat-raised-button>Cancel</button>
-      <button mat-raised-button color="primary" style="margin-left: 10px">Save</button>
-    </div>
+    <mat-form-field class="form-item image">
+      <input matInput type="text" placeholder="Image" id="image" formControlName="image">
+      <button mat-button matSuffix mat-icon-button *ngIf="profileForm.value.image" aria-label="Clear"
+        (click)="onClearInput('image')">
+        <mat-icon>close</mat-icon>
+      </button>
+    </mat-form-field>
+    <button class="form-item button" mat-flat-button (click)="onCancel()" color="warn">Cancel</button>
+    <button class="form-item button" mat-flat-button type="submit" [disabled]="profileForm.invalid"
+      color="primary">Save</button>
   </div>
-  
+</form>

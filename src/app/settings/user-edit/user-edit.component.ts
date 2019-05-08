@@ -6,6 +6,8 @@ import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import { StatusService } from 'src/app/shared/status.service';
 import { SettingsService } from '../settings.service';
+import { ProfileService } from 'src/app/shared/profile.service';
+import { Profile } from 'src/app/shared/profile.model';
 
 @Component({
   selector: 'app-user-edit',
@@ -22,12 +24,26 @@ export class UserEditComponent implements OnInit, OnDestroy {
   settingsSubscription: Subscription;
   userForm: FormGroup;
   id: number;
+  profileBlank = {
+    birthday: '',
+    eduType: '',
+    email: '',
+    engLevel: '',
+    faculty: '',
+    grade: '',
+    id: 99999,
+    image: '',
+    skills: [],
+    tel: '',
+    university: ''
+  };
 
   constructor(
     private usersService: UsersService,
     private route: ActivatedRoute,
     private statusService: StatusService,
     private settingsService: SettingsService,
+    private profileService: ProfileService,
     private router: Router
   ) { }
 
@@ -52,13 +68,13 @@ export class UserEditComponent implements OnInit, OnDestroy {
       (params: Params) => {
         this.id = +params['id'];
         this.editMode = params['id'] != null;
-        console.log('edit mode:', this.editMode);
-        console.log(params['id']);
+        // console.log('edit mode:', this.editMode);
+        // console.log(params['id']);
         this.initForm();
       }
     );
-    console.log('Flight Edit component inited!');
-    console.log(this.userForm);
+    // console.log('Flight Edit component inited!');
+    // console.log(this.userForm);
 
   }
   ngOnDestroy() {
@@ -77,31 +93,26 @@ export class UserEditComponent implements OnInit, OnDestroy {
 
 
   onSubmit() {
-    // this.statusService.spin();
-    // const age = this.countAge(this.flightForm.value.date, this.flightForm.value.ff);
-    // this.flightForm.value.age = age;
-    // this.userForm.value.active = this.active;
 
     if (this.editMode) {
+
+      const uid = this.usersService.getUser(this.id).uid;
       this.userForm.value.id = this.id;
+      this.userForm.value.uid = uid;
       console.log('Update:', this.userForm.value);
-      this.userForm.value.uid = this.usersService.getUser(this.id).uid;
-      // this.flightsService.updateFlight(
-      //   this.id,
-      //   this.flightForm.value,
-      //   this.authService.getToken(),
-      //   this.authService.getUID()
-      //   );
+
     } else {
-      this.userForm.value.id = this.usersService.getUsersLength();
+
+      const id = this.usersService.getUsersLength();
+      this.userForm.value.id = id;
+      this.profileBlank.id = id;
+
+      const uid = this.userForm.value.uid;
+
       console.log('Add:', this.userForm.value);
-      // this.flightForm.value.n = 0;
-      // this.flightsService.addFlight(
-      //   this.flightForm.value,
-      //   this.id,
-      //   this.authService.getToken(),
-      //   this.authService.getUID()
-      //   );
+      console.log('Add profile:', this.profileBlank);
+      this.profileService.updateProfile(uid, this.profileBlank, '/settings/users');
+
     }
     this.usersService.updateUser(this.userForm.value.uid, this.userForm.value);
   }

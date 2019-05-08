@@ -67,7 +67,6 @@ export class UsersService {
             this.router.navigate(['/settings/users']);
         })
         .catch((error) => console.error('Error writing document: ', error));
-
     }
     setUsers(users) {
         this.users = users;

@@ -3,6 +3,8 @@ import { Injectable } from "@angular/core";
 import * as firebase from 'firebase/app';
 import 'firebase/firestore';
 import { Subject } from "rxjs";
+import * as moment from 'moment';
+import { Router } from "@angular/router";
 
 @Injectable()
 export class ProfileService {
@@ -76,7 +78,12 @@ export class ProfileService {
     private profile: Profile;
     profileChanged = new Subject<Profile>();
 
+    constructor(
+        private router: Router
+        ) {}
+
     fetchProfile(id) {
+        this.setProfile([]);
         let db = firebase.firestore();
         db.collection('profiles').where('id', '==', id)
         .onSnapshot(querySnapshot => {
@@ -90,7 +97,17 @@ export class ProfileService {
     }
     setProfile(data) {
         this.profile = data;
+        this.profile['birthday'] = moment(this.profile['birthday']);
         this.profileChanged.next(this.profile);
+    }
+    updateProfile(doc, data, path) {
+        let db = firebase.firestore();
+        db.collection('profiles').doc(doc).set(data)
+        .then(() => {
+            console.log('Document successfully written!');
+            this.router.navigate([path]);
+        })
+        .catch((error) => console.error('Error writing document: ', error));
     }
     getUsers() {
         return this.users.slice();

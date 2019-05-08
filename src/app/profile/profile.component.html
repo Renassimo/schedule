@@ -1,16 +1,15 @@
 <mat-accordion>
-<mat-expansion-panel>
-    <mat-expansion-panel-header>
-      <mat-panel-title>Profile</mat-panel-title>
-      <mat-panel-description>
-        <span>{{user.name}} {{user.surname}}</span>
-        <img src="{{user.image}}" alt="{{user.name}} {{user.surname}}" class="header-photo">
-      </mat-panel-description>
-    </mat-expansion-panel-header>
-
-  <app-profile-view class="content-block"></app-profile-view>
-  <!-- <app-profile-edit class="content-block"></app-profile-edit> -->
-
-</mat-expansion-panel>
-<app-schedule></app-schedule>
+  <app-profile-view></app-profile-view>
+  <!-- <app-schedule></app-schedule> -->
 </mat-accordion>
+<br>
+<a routerLink="/profile/0">Iron Man</a>
+<br>
+<a routerLink="/profile/1">Fury</a>
+<br>
+<a routerLink="/profile/2">Spiderman</a>
+<br>
+<a routerLink="/profile/3">Assistant</a>
+<br>
+<a routerLink="/profile/4">Hulk</a>
+<br>

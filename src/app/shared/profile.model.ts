@@ -1,7 +1,10 @@
+
+import * as moment from 'moment';
+
 export class Profile {
 
     public id: number;
-    public birthday: string;
+    public birthday: moment.Moment;
     public tel: string;
     public email: string;
     public university: string;
@@ -14,7 +17,7 @@ export class Profile {
 
     constructor(
         id: number,
-        birthday: string,
+        birthday: moment.Moment,
         tel: string,
         email: string,
         university: string,

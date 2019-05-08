@@ -1,7 +1,7 @@
 import { NgModule } from "@angular/core";
 import { ProfileComponent } from "./profile.component";
 import { ProfileViewComponent } from "./profile-view/profile-view.component";
-import { ProfileEditComponent, ImageDownloadOptionsSheetComponent } from "./profile-edit/profile-edit.component";
+import { ProfileEditComponent } from "./profile-edit/profile-edit.component";
 import { ScheduleComponent } from "../schedule/schedule.component";
 import { ScheduleViewComponent } from "../schedule/schedule-view/schedule-view.component";
 import { ScheduleEditComponent } from "../schedule/schedule-edit/schedule-edit.component";
@@ -30,8 +30,7 @@ import { ReactiveFormsModule } from "@angular/forms";
         ProfileEditComponent,
         ScheduleComponent,
         ScheduleViewComponent,
-        ScheduleEditComponent,
-        ImageDownloadOptionsSheetComponent
+        ScheduleEditComponent
     ],
     imports: [
         CommonModule,
@@ -49,10 +48,6 @@ import { ReactiveFormsModule } from "@angular/forms";
         MatChipsModule,
         MatListModule,
         MatNativeDateModule
-    ],
-    entryComponents: [
-      ProfileEditComponent,
-      ImageDownloadOptionsSheetComponent
-    ],
+    ]
 })
 export class ProfileModule {}

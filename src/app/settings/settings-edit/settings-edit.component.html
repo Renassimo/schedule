@@ -34,7 +34,7 @@
       </button>
     </mat-form-field>
     <button
-    mat-raised-button
+    mat-flat-button
     class="form-item"
     (click)="onAdd()"
     [disabled]="newSetItemForm.invalid"
@@ -59,12 +59,12 @@
       </button>
     </mat-form-field>
     <button
-    mat-raised-button
+    mat-flat-button
     class="form-item"
     (click)="onEdit()"
     [disabled]="editSetItemForm.invalid"
     >Edit</button>
   </ng-template>
-  <button mat-raised-button class="form-item" color="warn" (click)="onCancel()">Cancel all changes</button>
-  <button mat-raised-button class="form-item" (click)="onSave()" color="primary">Save all changes</button>
+  <button mat-flat-button class="form-item" color="warn" (click)="onCancel()">Cancel all changes</button>
+  <button mat-flat-button class="form-item" (click)="onSave()" color="primary">Save all changes</button>
 </div></div>
