@@ -5,11 +5,15 @@ import { Injectable } from "@angular/core";
 import { StatusService } from '../shared/status.service';
 import { UsersService } from '../shared/users.service';
 import { SettingsService } from '../settings/settings.service';
+import { ScheduleService } from '../shared/schedule.service';
+import { Router } from '@angular/router';
 
 @Injectable()
 export class AuthService {
     token: string;
     uid: string;
+
+    date;
 
     firebaseConfig = {
         apiKey: 'AIzaSyA8ThV1o_69uZPNRUae18IZWkqQH1plAbU',
@@ -23,7 +27,9 @@ export class AuthService {
     constructor(
         private statusService: StatusService,
         private usersService: UsersService,
-        private settingsService: SettingsService
+        private settingsService: SettingsService,
+        private scheduleService: ScheduleService,
+        private router: Router
     ) {}
 
     initAuthentication() {
@@ -55,10 +61,21 @@ export class AuthService {
                     // this.dataStorageServiceGet.getFlights(this.token, this.uid);
                     this.usersService.fetchUsers();
                     this.settingsService.fetchSettings();
+                    this.setWeek();
                 // }
                 this.statusService.protectOutside();
             }
         ).catch(error => this.detectError(error));
+    }
+    setWeek() {
+        if (this.date) {
+            this.scheduleService.fetchWeek(this.date);
+        } else {
+            this.scheduleService.fetchWeek();
+        }
+    }
+    changeDate(date) {
+        this.date = date;
     }
     unAuthenticate() {
         this.token = null;
@@ -69,7 +86,7 @@ export class AuthService {
     }
     logout() {
         firebase.auth().signOut();
-        // this.router.navigate(['']);
+        this.router.navigate(['auth/login']);
     }
     getUID() {
         return this.uid = firebase.auth().currentUser.uid;
@@ -93,6 +110,7 @@ export class AuthService {
         .then(response => {
             this.detectResponse(response);
             // this.statusService.setSuccessMessage('You are logging in');
+            this.router.navigate(['/profile']);
         })
         .catch(error => this.detectError(error));
     }

@@ -1,91 +1,12 @@
-<mat-expansion-panel>
-<mat-expansion-panel-header>
-  <mat-panel-title>Schedule</mat-panel-title>
-  <mat-panel-description>
-    <span>{{user.name}} {{user.surname}}</span>
-    <mat-icon>date_range</mat-icon>
-  </mat-panel-description>
-</mat-expansion-panel-header>
-<div class="block-content">
+<mat-expansion-panel [expanded]="true">
+  <mat-expansion-panel-header>
+    <mat-panel-title>Schedule</mat-panel-title>
+    <mat-panel-description *ngIf="user">
+      <span>{{user.name}} {{user.surname}}</span>
+      <mat-icon>date_range</mat-icon>
+    </mat-panel-description>
+  </mat-expansion-panel-header>
 
-  <div class="schedule-wrapper">
-  
-            <div class="content-toolbar">
-                <mat-form-field class="content-toolbar-item">
-                  <input matInput
-                  [matDatepicker]="picker"
-                  placeholder="Jump to date"
-                  [formControl]=datePicker
-                  (dateChange)="onDatepickerChange()">
-                  <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-                  <mat-datepicker #picker ></mat-datepicker>
-                </mat-form-field>
-                <p>{{ weekHours }} of 32 working hours in this week</p>
-                <div class="button-row content-toolbar-item">
-                  <div *ngIf="editMode">
-                    <button mat-flat-button>Cancel</button>
-                    <button
-                    mat-flat-button color="primary"
-                    (click)="editMode = false"
-                    style="margin-left: 10px">Save</button>
-                  </div>
-                  <div *ngIf="!editMode">
-                    <button mat-stroked-button (click)="editMode = true">Edit</button>
-                  </div>
-                </div>
-  
-            </div>
-  
-          <div *ngFor="let day of week; let i = index"
-          [class]="'schedule-day-block ' + 'schedule-day-block' + (i+1)"
-          [ngClass]="{'chosen': i === chosenDay && !editMode}">
-            <div class="schedule-day-header">
-              <h3 class="week-day">{{ dayNames[i] }}</h3>
-              <h4 class="day">{{ day.day }} {{ monthNames[day.month] }}.
-                <span *ngIf="day.dayType === 'h'" matBadge="H" 
-                matBadgeOverlap="false" matBadgePosition="above after"></span>
-              </h4>
-            </div>
-  
-            <!-- <app-schedule-view
-              *ngIf="!editMode"
-              [class]="'day-time-block ' + day.typeClass"
-              ></app-schedule-view> -->
-  
-              <app-schedule-edit
-              *ngIf="editMode"
-              class="day-time-block edit"
-              ></app-schedule-edit>
-              
-              <div *ngIf="!editMode" [class]="'day-time-block '"
-              [ngClass]="{'w-day': day.workDay, 'out-day': !day.workDay}">
-                <div *ngIf="day.workDay" class="type-names-column">
-                  <p class="type-name">In</p>
-                  <p class="type-name">Out</p>
-                  <p class="type-name">L </p>
-                </div>
-  
-                <div *ngIf="day.workDay" class="time-column">
-                  <p>{{ day.timeIn }}</p>
-                  <p>{{ day.timeOut }}</p>
-                  <p>{{ day.breakDuration }}</p>
-                </div>
-  
-                <div *ngIf="!day.workDay" class="out-day-column">
-                    <p class="out-day-text">{{ day.dayType }}</p>
-                </div>
-              </div>
-  
-              <p *ngIf="day.workDay">{{ day.duration }} hours</p>
-  
-          </div>
-  
-          <div class="change-week change-week-left" (click)="changeWeek(false)">
-            <mat-icon>chevron_left</mat-icon>
-          </div>
-          <div class="change-week change-week-right" (click)="changeWeek(true)">
-            <mat-icon>chevron_right</mat-icon>
-          </div>
-        </div>
-      </div>
+  <router-outlet></router-outlet>
+
 </mat-expansion-panel>

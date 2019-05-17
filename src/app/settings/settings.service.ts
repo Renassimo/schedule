@@ -32,7 +32,6 @@ export class SettingsService {
                     }
                 );
                 this.setSettings(settings);
-                console.log('Settings: ', this.settings)
             }
         );
     }

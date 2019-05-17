@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { StatusService } from '../shared/status.service';
 
 @Component({
   selector: 'app-books',
@@ -12,9 +13,17 @@ export class BooksComponent implements OnInit {
   dataSource = ELEMENT_DATA;
   genres = ['Business & IT', 'Literature in English'];
 
-  constructor() { }
+  constructor(
+    private statusService: StatusService
+  ) { }
 
   ngOnInit() {
+  }
+  uLevel() {
+    return this.statusService.getULevel();
+  }
+  isAuthenticated() {
+    return this.statusService.isAuthenticated();
   }
 
 }

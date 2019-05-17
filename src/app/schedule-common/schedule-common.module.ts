@@ -1,8 +1,5 @@
 import { NgModule } from "@angular/core";
 import { ScheduleCommonComponent } from "./schedule-common.component";
-import { SchedulePositionComponent } from "./schedule-position/schedule-position.component";
-import { ScheduleRoomComponent } from "./schedule-room/schedule-room.component";
-import { ScheduleTeamComponent } from "./schedule-team/schedule-team.component";
 import {
     MatExpansionModule,
     MatIconModule,
@@ -16,7 +13,8 @@ import {
     MatChipsModule,
     MatListModule,
     MatRadioModule,
-    MatNativeDateModule
+    MatNativeDateModule,
+    MatBadgeModule
 } from '@angular/material';
 import { CommonModule } from "@angular/common";
 import { ScheduleCommonRoutingModule } from "./schedule-common-routing.module";
@@ -24,10 +22,7 @@ import { ReactiveFormsModule, FormsModule } from "@angular/forms";
 
 @NgModule({
     declarations: [
-        ScheduleCommonComponent,
-        SchedulePositionComponent,
-        ScheduleRoomComponent,
-        ScheduleTeamComponent
+        ScheduleCommonComponent
     ],
     imports: [
         CommonModule,
@@ -46,7 +41,8 @@ import { ReactiveFormsModule, FormsModule } from "@angular/forms";
         MatListModule,
         MatRadioModule,
         FormsModule,
-        MatNativeDateModule
+        MatNativeDateModule,
+        MatBadgeModule
     ],
 })
 export class ScheduleCommonModule {}

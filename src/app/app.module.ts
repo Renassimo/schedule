@@ -8,8 +8,6 @@ import {MatToolbarModule} from '@angular/material/toolbar';
 import {MatMenuModule} from '@angular/material/menu';
 import {MatIconModule} from '@angular/material/icon';
 
-import { HeaderComponent } from './header/header.component';
-
 import { ProfileService } from './shared/profile.service';
 import { ScheduleService } from './shared/schedule.service';
 import { AppRoutingModule } from './app-routing.module';
@@ -17,11 +15,11 @@ import { UsersService } from './shared/users.service';
 import { AuthService } from './auth/auth.service';
 import { StatusService } from './shared/status.service';
 import { SettingsService } from './settings/settings.service';
+import { MatSidenavModule, MatListModule, MatButtonModule, MatTooltipModule } from '@angular/material';
 
 @NgModule({
   declarations: [
-    AppComponent,
-    HeaderComponent,
+    AppComponent
   ],
   imports: [
     BrowserModule,
@@ -30,6 +28,10 @@ import { SettingsService } from './settings/settings.service';
     MatToolbarModule,
     MatMenuModule,
     MatIconModule,
+    MatSidenavModule,
+    MatListModule,
+    MatButtonModule,
+    MatTooltipModule
   ],
   providers: [ProfileService, UsersService, ScheduleService, AuthService, StatusService, SettingsService],
   bootstrap: [AppComponent]

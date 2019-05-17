@@ -1,34 +1,94 @@
-<div class="schedule-options content-toolbar">
-  <div class="datepicker-wrapper content-toolbar-item">
-    <div class="change-week change-week-left"><mat-icon>chevron_left</mat-icon></div>
-    <mat-form-field>
-      <input matInput [matDatepicker]="picker" placeholder="Jump to date">
-      <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-      <mat-datepicker #picker ></mat-datepicker>
-    </mat-form-field>
-    <div class="change-week change-week-right"><mat-icon>chevron_right</mat-icon></div>
-  </div>
-  <div class="sorter-wrapper content-toolbar-item">
-    <mat-radio-group
-    class="sorter-radio-group"
-    [(ngModel)]="sorterChosen">
-    <span>Sort by: </span>
-      <mat-radio-button
-      class="sorter-radio-button"
-      *ngFor="let sorter of sorters"
-      [value]="sorter"
-      style="margin-left: 10px">
-        {{ sorter }}
-      </mat-radio-button>
-    </mat-radio-group>
-  </div>
-  <div class="content-toolbar-item">
-    <span>Workers: 34 (39), 7:30 - 22:00</span>
-  </div>
-</div>
+<ng-template [ngIf]="isAuthenticated()">
 
-<br>
+  <div class="schedule-options content-toolbar">
+    <div class="datepicker-wrapper content-toolbar-item">
+      <div class="change-week change-week-left" (click)="changeWeek(false)">
+        <mat-icon>chevron_left</mat-icon>
+      </div>
+      <mat-form-field>
+        <input matInput [matDatepicker]="picker" placeholder="Jump to date" [formControl]="datePicker"
+          (dateChange)="onDatepickerChange()">
+        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+        <mat-datepicker #picker></mat-datepicker>
+      </mat-form-field>
+      <div class="change-week change-week-right" (click)="changeWeek(true)">
+        <mat-icon>chevron_right</mat-icon>
+      </div>
+    </div>
 
-<app-schedule-room *ngIf="sorterChosen === 'Room'"></app-schedule-room>
-<app-schedule-team *ngIf="sorterChosen === 'Team'"></app-schedule-team>
-<app-schedule-position *ngIf="sorterChosen === 'Position'"></app-schedule-position>
+    <div class="content-toolbar-item">
+      <a mat-flat-button [color]="type == 'team' ? 'primary' : 'basic'"
+        [routerLink]="'/schedule/team/' + year + '/' + week">Team</a>
+      <a mat-flat-button [color]="type == 'room' ? 'primary' : 'basic'"
+        [routerLink]="'/schedule/room/' + year + '/' + week">Room</a>
+      <a mat-flat-button [color]="type == 'position' ? 'primary' : 'basic'"
+        [routerLink]="'/schedule/position/' + year + '/' + week">Position</a>
+    </div>
+    <div class="content-toolbar-item">
+      <!-- <span>Workers: 34 (39), 7:30 - 22:00</span> -->
+    </div>
+  </div>
+
+  <br>
+
+  <mat-accordion multi="true">
+
+    <mat-expansion-panel class="tabbed" *ngFor="let sched of typedSched; let i = index" [expanded]="true">
+      <mat-expansion-panel-header>
+        <mat-panel-title>{{ sched.type }}</mat-panel-title>
+        <mat-panel-description>
+        </mat-panel-description>
+      </mat-expansion-panel-header>
+
+      <div class="schedule-container">
+
+        <table mat-table [dataSource]="typedSched[i].users">
+
+          <!-- Position Column -->
+          <ng-container matColumnDef="pos">
+            <th mat-header-cell *matHeaderCellDef> No. </th>
+            <td mat-cell *matCellDef="let element; let j = index"> {{j + 1}} </td>
+          </ng-container>
+
+          <!-- Worker Column -->
+          <ng-container matColumnDef="worker">
+            <th mat-header-cell *matHeaderCellDef class="worker-name"> Worker </th>
+            <td mat-cell *matCellDef="let element" class="worker-name">
+              <a routerLink="/profile/{{element.id}}"> {{element.name}} {{element.surname}} </a> <br>
+              <i>{{element.tit1}}
+                -
+                {{element.tit2}} ({{element.duration}} of
+                {{sched.hours}})</i>
+            </td>
+          </ng-container>
+
+          <ng-container [matColumnDef]="day" *ngFor="let day of dayColumns; let k = index">
+            <th mat-header-cell *matHeaderCellDef> {{ monday.isoWeekday(k + 1).format("dddd") }} <br>
+              {{ monday.isoWeekday(k + 1).format("D MMM") }}. </th>
+            <td mat-cell *matCellDef="let element">
+              <ng-template [ngIf]="element.schedule[k].workDay">
+                {{element.schedule[k].in}} - {{element.schedule[k].out}} <br>
+                <i>B: {{formatDuration(element.schedule[k].break)}} H: {{element.schedule[k].duration}}
+                  <span *ngIf="element.schedule[k].type === 'WFH'" matBadge="H" matBadgeOverlap="false"
+                    matBadgePosition="above after"></span>
+                </i>
+              </ng-template>
+              <ng-template [ngIf]="!element.schedule[k].workDay">
+                {{element.schedule[k].type}}
+              </ng-template>
+            </td>
+          </ng-container>
+
+          <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+          <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+        </table>
+
+
+      </div>
+
+    </mat-expansion-panel>
+
+  </mat-accordion>
+
+  <br>
+</ng-template>

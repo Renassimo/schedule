@@ -164,6 +164,9 @@ export class UserEditComponent implements OnInit, OnDestroy {
       'uid': new FormControl({value: uid, disabled: this.editMode}, Validators.required),
     });
   }
+  uLevel() {
+    return this.statusService.getULevel();
+  }
   isAuthenticated() {
     return this.statusService.isAuthenticated();
   }

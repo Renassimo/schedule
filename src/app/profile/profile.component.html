@@ -1,15 +1,4 @@
-<mat-accordion>
+<mat-accordion *ngIf="isAuthenticated()">
   <app-profile-view></app-profile-view>
-  <!-- <app-schedule></app-schedule> -->
+  <app-schedule></app-schedule>
 </mat-accordion>
-<br>
-<a routerLink="/profile/0">Iron Man</a>
-<br>
-<a routerLink="/profile/1">Fury</a>
-<br>
-<a routerLink="/profile/2">Spiderman</a>
-<br>
-<a routerLink="/profile/3">Assistant</a>
-<br>
-<a routerLink="/profile/4">Hulk</a>
-<br>

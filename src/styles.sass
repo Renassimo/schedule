@@ -10,13 +10,14 @@
     margin: 0 auto
     width: 92%
     @include media-breakpoint-up(sm)
-        width: 540px
+        width: 98%
+        max-width: 540px
     @include media-breakpoint-up(md)
-        width: 720px
+        max-width: 720px
     @include media-breakpoint-up(lg)
-        width: 960px
+        max-width: 960px
     @include media-breakpoint-up(xl)
-        width: 1140px
+        max-width: 1140px
 
 .content-block
     display: grid
@@ -41,6 +42,8 @@ mat-expansion-panel-header
         align-items: center
     mat-panel-title
         max-width: 250px
+.tabbed div.mat-expansion-panel-body
+    padding: 0
 
 .form-fix-width
     .mat-form-field-flex

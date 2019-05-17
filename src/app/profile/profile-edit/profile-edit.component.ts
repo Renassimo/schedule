@@ -39,14 +39,6 @@ export const MY_FORMATS = {
 })
 export class ProfileEditComponent implements OnInit, OnDestroy {
   startDate = new Date(1998, 0, 1);
-  eduTypes = [
-    'Graduated', 'Full time', 'Extramural', 'Part time', 'Unfinished'
-  ];
-  engLevels = [
-    'A1 (Beginner)', 'A2 (Elementary English)',
-    'B1 (Intermediate English)', 'B2 (Upper-Intermediate English)',
-    'C1 (Advanced English)', 'C2 (Proficiency English)'
-  ];
 
   id: number;
   user: User;
@@ -197,6 +189,12 @@ export class ProfileEditComponent implements OnInit, OnDestroy {
 
   isAuthenticated() {
     return this.statusService.isAuthenticated();
+  }
+  uLevel() {
+    return this.statusService.getULevel();
+  }
+  uId() {
+    return this.statusService.getId();
   }
 
   add(event: MatChipInputEvent): void {

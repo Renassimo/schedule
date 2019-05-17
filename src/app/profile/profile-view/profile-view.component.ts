@@ -13,7 +13,6 @@ import * as moment from 'moment';
   selector: 'app-profile-view',
   templateUrl: './profile-view.component.html',
   styleUrls: ['./profile-view.component.sass'],
-  // viewProviders: [MatExpansionPanel] // <----- Here
 })
 export class ProfileViewComponent implements OnInit, OnDestroy {
   id: number;
@@ -21,6 +20,7 @@ export class ProfileViewComponent implements OnInit, OnDestroy {
   profile: Profile;
   usersSubscription: Subscription;
   profileSubscription: Subscription;
+  idFromParams = false;
 
   constructor(
     private route: ActivatedRoute,
@@ -34,13 +34,21 @@ export class ProfileViewComponent implements OnInit, OnDestroy {
     this.route.params
     .subscribe(
       (params: Params) => {
-        this.id = +params['id'];
+        if (params['id']) {
+          this.idFromParams = true;
+          this.id = +params['id'];
+        } else {
+          this.idFromParams = false;
+          this.setId();
+        }
+        // this.id = +params['id'];
         // this.profileService.fetchProfile(this.id);
         this.setProfile();
       }
     );
     this.usersSubscription = this.usersService.usersChanged.subscribe(
       (users: User[]) => {
+        this.setId();
         this.user = users[this.id];
         // console.log('User:', this.user);
       }
@@ -72,6 +80,18 @@ export class ProfileViewComponent implements OnInit, OnDestroy {
       this.profile = null;
       this.user = null;
     }
+  }
+  setId() {
+    if (this.isAuthenticated && !this.idFromParams) {
+      this.id = this.statusService.getId();
+      this.setProfile();
+    }
+  }
+  uLevel() {
+    return this.statusService.getULevel();
+  }
+  uId() {
+    return this.statusService.getId();
   }
   isAuthenticated() {
     return this.statusService.isAuthenticated();

@@ -1,152 +1,146 @@
-<mat-accordion>
+<ng-template [ngIf]="isAuthenticated() && uLevel() <= 0">
+
+  <mat-accordion>
 
     <mat-expansion-panel>
-    <mat-expansion-panel-header>
-      <mat-panel-title>Library</mat-panel-title>
-      <mat-panel-description>
-        <span></span>
-      </mat-panel-description>
-    </mat-expansion-panel-header>
-      
-    <div class="books-container mat-elevation-z8">
-      <table mat-table [dataSource]="dataSource">
-    
-        <!-- Position Column -->
-        <ng-container matColumnDef="position">
-          <th mat-header-cell *matHeaderCellDef> No. </th>
-          <td mat-cell *matCellDef="let element"> {{element.position}} </td>
-        </ng-container>
-    
-        <!-- Book Column -->
-        <ng-container matColumnDef="name">
-          <th mat-header-cell *matHeaderCellDef> Book </th>
-          <td mat-cell *matCellDef="let element">
-            <a [href]="element.link" target="_blank"> {{element.name}} </a>
-            <a href="#" class="pencil-edit-button"><mat-icon>edit</mat-icon></a>
-          </td>
-        </ng-container>
-    
-        <!-- Genre Column -->
-        <ng-container matColumnDef="genre">
-          <th mat-header-cell *matHeaderCellDef> Genre </th>
-          <td mat-cell *matCellDef="let element"> {{element.genre}} </td>
-        </ng-container>
-    
-        <!-- Occupied By Column -->
-        <ng-container matColumnDef="occupiedBy">
-          <th mat-header-cell *matHeaderCellDef> Occupied by </th>
-          <td mat-cell *matCellDef="let element"> <a href="#"> {{element.occupiedBy}} </a> </td>
-        </ng-container>
-    
-        <!-- Occupied From Column -->
-        <ng-container matColumnDef="occupiedFrom">
-          <th mat-header-cell *matHeaderCellDef> Occupied from (days) </th>
-          <td mat-cell *matCellDef="let element"> {{element.occupiedFrom}} </td>
-        </ng-container>
-    
-        <!-- Status Column -->
-        <ng-container matColumnDef="status">
-          <th mat-header-cell *matHeaderCellDef> Take this book </th>
-          <td mat-cell *matCellDef="let element">
-            <button
-            mat-button color="primary"
-            *ngIf="element.status === 'free'"
-            >Take</button>
-            <button
-            mat-button color="warn"
-            *ngIf="element.status === 'occupied' && element.occupiedBy === 'Abuzyar T.'"
-            >Return</button>
-          </td>
-        </ng-container>
-    
-        <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
-        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-      </table>
-    </div>  
-      
-    </mat-expansion-panel>
+      <mat-expansion-panel-header>
+        <mat-panel-title>Library</mat-panel-title>
+        <mat-panel-description>
+          <span></span>
+        </mat-panel-description>
+      </mat-expansion-panel-header>
 
-
-
-    <mat-expansion-panel>
-    <mat-expansion-panel-header>
-      <mat-panel-title>Suggested books</mat-panel-title>
-      <mat-panel-description>
-        <span></span>
-      </mat-panel-description>
-    </mat-expansion-panel-header>
-      
-    <div class="books-container mat-elevation-z8">
+      <div class="books-container mat-elevation-z8">
         <table mat-table [dataSource]="dataSource">
-      
+
           <!-- Position Column -->
           <ng-container matColumnDef="position">
             <th mat-header-cell *matHeaderCellDef> No. </th>
             <td mat-cell *matCellDef="let element"> {{element.position}} </td>
           </ng-container>
-      
+
           <!-- Book Column -->
           <ng-container matColumnDef="name">
             <th mat-header-cell *matHeaderCellDef> Book </th>
             <td mat-cell *matCellDef="let element">
               <a [href]="element.link" target="_blank"> {{element.name}} </a>
-              <a href="#" class="pencil-edit-button"><mat-icon>edit</mat-icon></a>
+              <a href="#" class="pencil-edit-button">
+                <mat-icon>edit</mat-icon>
+              </a>
             </td>
           </ng-container>
-      
+
           <!-- Genre Column -->
           <ng-container matColumnDef="genre">
             <th mat-header-cell *matHeaderCellDef> Genre </th>
             <td mat-cell *matCellDef="let element"> {{element.genre}} </td>
           </ng-container>
-      
+
+          <!-- Occupied By Column -->
+          <ng-container matColumnDef="occupiedBy">
+            <th mat-header-cell *matHeaderCellDef> Occupied by </th>
+            <td mat-cell *matCellDef="let element"> <a href="#"> {{element.occupiedBy}} </a> </td>
+          </ng-container>
+
+          <!-- Occupied From Column -->
+          <ng-container matColumnDef="occupiedFrom">
+            <th mat-header-cell *matHeaderCellDef> Occupied from (days) </th>
+            <td mat-cell *matCellDef="let element"> {{element.occupiedFrom}} </td>
+          </ng-container>
+
+          <!-- Status Column -->
+          <ng-container matColumnDef="status">
+            <th mat-header-cell *matHeaderCellDef> Take this book </th>
+            <td mat-cell *matCellDef="let element">
+              <button mat-button color="primary" *ngIf="element.status === 'free'">Take</button>
+              <button mat-button color="warn"
+                *ngIf="element.status === 'occupied' && element.occupiedBy === 'Abuzyar T.'">Return</button>
+            </td>
+          </ng-container>
+
+          <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
+          <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+        </table>
+      </div>
+
+    </mat-expansion-panel>
+
+
+
+    <mat-expansion-panel>
+      <mat-expansion-panel-header>
+        <mat-panel-title>Suggested books</mat-panel-title>
+        <mat-panel-description>
+          <span></span>
+        </mat-panel-description>
+      </mat-expansion-panel-header>
+
+      <div class="books-container mat-elevation-z8">
+        <table mat-table [dataSource]="dataSource">
+
+          <!-- Position Column -->
+          <ng-container matColumnDef="position">
+            <th mat-header-cell *matHeaderCellDef> No. </th>
+            <td mat-cell *matCellDef="let element"> {{element.position}} </td>
+          </ng-container>
+
+          <!-- Book Column -->
+          <ng-container matColumnDef="name">
+            <th mat-header-cell *matHeaderCellDef> Book </th>
+            <td mat-cell *matCellDef="let element">
+              <a [href]="element.link" target="_blank"> {{element.name}} </a>
+              <a href="#" class="pencil-edit-button">
+                <mat-icon>edit</mat-icon>
+              </a>
+            </td>
+          </ng-container>
+
+          <!-- Genre Column -->
+          <ng-container matColumnDef="genre">
+            <th mat-header-cell *matHeaderCellDef> Genre </th>
+            <td mat-cell *matCellDef="let element"> {{element.genre}} </td>
+          </ng-container>
+
           <!-- Suggested By Column -->
           <ng-container matColumnDef="suggestedBy">
             <th mat-header-cell *matHeaderCellDef> Suggested by </th>
             <td mat-cell *matCellDef="let element"> <a href="#"> {{element.occupiedBy}} </a> </td>
           </ng-container>
-      
+
           <!-- Votes Column -->
           <ng-container matColumnDef="votes">
             <th mat-header-cell *matHeaderCellDef class="centrilize"> Votes </th>
             <td mat-cell *matCellDef="let element" class="centrilize"> {{element.votes}} </td>
           </ng-container>
-      
+
           <!-- Vote Column -->
           <ng-container matColumnDef="vote">
             <th mat-header-cell *matHeaderCellDef class="centrilize"> Vote </th>
             <td mat-cell *matCellDef="let element" class="centrilize">
-              <button
-              mat-button color="primary"
-              *ngIf="element.voteStatus === 'notVoted'"
-              >Vote</button>
-              <button
-              mat-button color="warn"
-              *ngIf="element.voteStatus === 'voted' && element.occupiedBy !== 'Abuzyar T.'"
-              >Unvote</button>
-              <button
-              mat-button disabled
-              *ngIf="element.voteStatus === 'voted' && element.occupiedBy === 'Abuzyar T.'"
-              >Suggested</button>
+              <button mat-button color="primary" *ngIf="element.voteStatus === 'notVoted'">Vote</button>
+              <button mat-button color="warn"
+                *ngIf="element.voteStatus === 'voted' && element.occupiedBy !== 'Abuzyar T.'">Unvote</button>
+              <button mat-button disabled
+                *ngIf="element.voteStatus === 'voted' && element.occupiedBy === 'Abuzyar T.'">Suggested</button>
             </td>
           </ng-container>
-      
+
           <tr mat-header-row *matHeaderRowDef="displayedColumns2; sticky: true"></tr>
           <tr mat-row *matRowDef="let row; columns: displayedColumns2;"></tr>
         </table>
-      </div>  
-      
+      </div>
+
     </mat-expansion-panel>
 
     <mat-expansion-panel>
-        <mat-expansion-panel-header>
-          <mat-panel-title>Suggested the book</mat-panel-title>
-          <mat-panel-description>
-            <span></span>
-          </mat-panel-description>
-        </mat-expansion-panel-header>
-          
-        <div class="suggest-container">
+      <mat-expansion-panel-header>
+        <mat-panel-title>Suggested the book</mat-panel-title>
+        <mat-panel-description>
+          <span></span>
+        </mat-panel-description>
+      </mat-expansion-panel-header>
+
+      <div class="suggest-container">
         <mat-form-field>
           <input matInput type="text" placeholder="Name">
         </mat-form-field>
@@ -161,16 +155,18 @@
           </mat-select>
         </mat-form-field>
         <button mat-flat-button color="primary">Suggest</button>
-        </div>
-        <div class="suggested-container">
-          <h4>The book 
-            "<a target="_blank" href="https://www.ozon.ru/context/detail/id/141457192/">Аналитическая культура</a>" 
-            suggested</h4>
-        </div>
-          
-        </mat-expansion-panel>
+      </div>
+      <div class="suggested-container">
+        <h4>The book
+          "<a target="_blank" href="https://www.ozon.ru/context/detail/id/141457192/">Аналитическая культура</a>"
+          suggested</h4>
+      </div>
+
+    </mat-expansion-panel>
 
 
-</mat-accordion>
+  </mat-accordion>
 
-<app-book-edit></app-book-edit>
+  <app-book-edit></app-book-edit>
+
+</ng-template>

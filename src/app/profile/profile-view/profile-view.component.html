@@ -39,7 +39,7 @@
       <p><span class="type-name">Skills: </span><span *ngFor="let skill of profile.skills">{{skill}}, </span></p>
     </div>
 
-    <a class="edit-button" routerLink="/profile/edit/{{id}}">
+    <a class="edit-button" routerLink="/profile/edit/{{id}}" *ngIf="uId() == id || uLevel() <= 1">
       <mat-icon>edit</mat-icon>
     </a>
 

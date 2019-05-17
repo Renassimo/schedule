@@ -1,220 +1,214 @@
 import { Schedule } from "./schedule.model";
 import { DateContent } from "./date-content.model";
 import { Injectable, OnInit } from "@angular/core";
+import * as firebase from 'firebase/app';
+import 'firebase/firestore';
+import { Subject } from "rxjs";
+import * as moment from 'moment';
+import { StatusService } from "./status.service";
+import { Router } from "@angular/router";
 
 @Injectable()
-export class ScheduleService implements OnInit {
+export class ScheduleService {
     week = [];
     userWeek = [];
     zeroDate = new Date(2019, 1, 25, 0, 0, 0, 0);
-    private schedule: Schedule[] = [
-        new Schedule(
-            new Date(2019, 1, 25, 0, 0, 0, 0), [
-            new DateContent(0, '9:00', '18:00', '1:00', 8, 'w', true, ''),
-            new DateContent(1, '9:00', '18:00', '1:00', 8, 'w', true, ''),
-            new DateContent(2, '7:00', '16:00', '1:00', 8, 'w', true, ''),
-            new DateContent(3, '9:00', '18:00', '1:00', 8, 'w', true, ''),
-            new DateContent(4, '9:00', '18:00', '1:00', 8, 'w', true, ''),
-            new DateContent(5, '9:00', '18:00', '1:00', 8, 'w', true, ''),
-            new DateContent(6, '9:00', '18:00', '1:00', 8, 'w', true, ''),
-            new DateContent(7, '9:00', '18:00', '1:00', 8, 'w', true, '')
-        ]),
-        new Schedule(
-            new Date(2019, 1, 26, 0, 0, 0, 0), [
-            new DateContent(0, '9:00', '18:00', '1:00', 8, 'h', true, ''),
-            new DateContent(1, '9:00', '18:00', '1:00', 8, 'w', true, ''),
-            new DateContent(2, '9:00', '18:00', '1:00', 8, 'h', true, ''),
-            new DateContent(3, '9:00', '18:00', '1:00', 8, 'w', true, ''),
-            new DateContent(4, '9:00', '18:00', '1:00', 8, 'h', true, ''),
-            new DateContent(5, '9:00', '18:00', '1:00', 8, 'w', true, ''),
-            new DateContent(6, '9:00', '18:00', '1:00', 8, 'w', true, ''),
-            new DateContent(7, '9:00', '18:00', '1:00', 8, 'w', true, '')
-        ]),
-        new Schedule(
-            new Date(2019, 1, 27, 0, 0, 0, 0), [
-            new DateContent(0, '9:00', '18:00', '1:00', 8, 'w', true, ''),
-            new DateContent(1, '9:00', '18:00', '1:00', 8, 'w', true, ''),
-            new DateContent(2, '9:00', '18:00', '1:00', 8, 'w', true, ''),
-            new DateContent(3, '9:00', '18:00', '1:00', 8, 'w', true, ''),
-            new DateContent(4, '9:00', '18:00', '1:00', 8, 'w', true, ''),
-            new DateContent(5, '9:00', '18:00', '1:00', 8, 'w', true, ''),
-            new DateContent(6, '9:00', '18:00', '1:00', 8, 'out', false, ''),
-            new DateContent(7, '9:00', '18:00', '1:00', 8, 'w', true, '')
-        ]),
-        new Schedule(
-            new Date(2019, 1, 28, 0, 0, 0, 0), [
-            new DateContent(0, '9:00', '18:00', '1:00', 8, 'w', true, ''),
-            new DateContent(1, '9:00', '18:00', '1:00', 8, 'w', true, ''),
-            new DateContent(2, '10:00', '20:00', '2:00', 8, 'w', true, ''),
-            new DateContent(3, '9:00', '18:00', '1:00', 8, 'w', true, ''),
-            new DateContent(4, '9:00', '18:00', '1:00', 8, 'w', true, ''),
-            new DateContent(5, '9:00', '18:00', '1:00', 8, 'w', true, ''),
-            new DateContent(6, '9:00', '18:00', '1:00', 8, 'w', true, ''),
-            new DateContent(7, '9:00', '18:00', '1:00', 8, 'out', false, '')
-        ]),
-        new Schedule(
-            new Date(2019, 2, 1, 0, 0, 0, 0), [
-            new DateContent(0, '9:00', '18:00', '1:00', 8, 'w', true, ''),
-            new DateContent(1, '9:00', '18:00', '1:00', 8, 'w', true, ''),
-            new DateContent(2, '9:00', '18:00', '1:00', 8, 'w', true, ''),
-            new DateContent(3, '9:00', '18:00', '1:00', 8, 'w', true, ''),
-            new DateContent(4, '9:00', '18:00', '1:00', 8, 'w', true, ''),
-            new DateContent(5, '9:00', '18:00', '1:00', 8, 'w', true, ''),
-            new DateContent(6, '9:00', '18:00', '1:00', 8, 'w', true, ''),
-            new DateContent(7, '9:00', '18:00', '1:00', 8, 'pto', false, '')
-        ]),
-        new Schedule(
-            new Date(2019, 2, 2, 0, 0, 0, 0), [
-            new DateContent(0, '9:00', '18:00', '1:00', 8, 'out', false, ''),
-            new DateContent(1, '9:00', '18:00', '1:00', 8, 'out', false, ''),
-            new DateContent(2, '9:00', '18:00', '1:00', 8, 'out', false, ''),
-            new DateContent(3, '9:00', '18:00', '1:00', 8, 'out', false, ''),
-            new DateContent(4, '9:00', '18:00', '1:00', 8, 'out', false, ''),
-            new DateContent(5, '9:00', '18:00', '1:00', 8, 'out', false, ''),
-            new DateContent(6, '9:00', '18:00', '1:00', 8, 'w', true, ''),
-            new DateContent(7, '9:00', '18:00', '1:00', 8, 'w', true, '')
-        ]),
-        new Schedule(
-            new Date(2019, 2, 3, 0, 0, 0, 0), [
-            new DateContent(0, '9:00', '18:00', '1:00', 8, 'out', false, ''),
-            new DateContent(1, '9:00', '18:00', '1:00', 8, 'out', false, ''),
-            new DateContent(2, '9:00', '18:00', '1:00', 8, 'out', false, ''),
-            new DateContent(3, '9:00', '18:00', '1:00', 8, 'out', false, ''),
-            new DateContent(4, '9:00', '18:00', '1:00', 8, 'out', false, ''),
-            new DateContent(5, '9:00', '18:00', '1:00', 8, 'out', false, ''),
-            new DateContent(6, '9:00', '18:00', '1:00', 8, 'out', false, ''),
-            new DateContent(7, '9:00', '18:00', '1:00', 8, 'out', false, '')
-        ]),
-        new Schedule(
-            new Date(2019, 2, 4, 0, 0, 0, 0), [
-            new DateContent(0, '9:00', '18:00', '1:00', 8, 'out', true, ''),
-            new DateContent(1, '9:00', '18:00', '1:00', 8, 'out', true, ''),
-            new DateContent(2, '9:00', '18:00', '1:00', 8, 'out', true, ''),
-            new DateContent(3, '9:00', '18:00', '1:00', 8, 'out', true, ''),
-            new DateContent(4, '9:00', '18:00', '1:00', 8, 'out', true, ''),
-            new DateContent(5, '9:00', '18:00', '1:00', 8, 'out', true, ''),
-            new DateContent(6, '9:00', '18:00', '1:00', 8, 'out', true, ''),
-            new DateContent(7, '9:00', '18:00', '1:00', 8, 'out', true, '')
-        ]),
-        new Schedule(
-            new Date(2019, 2, 5, 0, 0, 0, 0), [
-            new DateContent(0, '9:00', '18:00', '1:00', 8, 'out', true, ''),
-            new DateContent(1, '9:00', '18:00', '1:00', 8, 'out', true, ''),
-            new DateContent(2, '9:00', '18:00', '1:00', 8, 'out', true, ''),
-            new DateContent(3, '9:00', '18:00', '1:00', 8, 'out', true, ''),
-            new DateContent(4, '9:00', '18:00', '1:00', 8, 'out', true, ''),
-            new DateContent(5, '9:00', '18:00', '1:00', 8, 'out', true, ''),
-            new DateContent(6, '9:00', '18:00', '1:00', 8, 'out', true, ''),
-            new DateContent(7, '9:00', '18:00', '1:00', 8, 'out', true, '')
-        ]),
-        new Schedule(
-            new Date(2019, 2, 6, 0, 0, 0, 0), [
-            new DateContent(0, '9:00', '18:00', '1:00', 8, 'out', true, ''),
-            new DateContent(1, '9:00', '18:00', '1:00', 8, 'out', true, ''),
-            new DateContent(2, '9:00', '18:00', '1:00', 8, 'out', true, ''),
-            new DateContent(3, '9:00', '18:00', '1:00', 8, 'out', true, ''),
-            new DateContent(4, '9:00', '18:00', '1:00', 8, 'out', true, ''),
-            new DateContent(5, '9:00', '18:00', '1:00', 8, 'out', true, ''),
-            new DateContent(6, '9:00', '18:00', '1:00', 8, 'out', true, ''),
-            new DateContent(7, '9:00', '18:00', '1:00', 8, 'out', true, '')
-        ]),
-        new Schedule(
-            new Date(2019, 2, 7, 0, 0, 0, 0), [
-            new DateContent(0, '9:00', '18:00', '1:00', 8, 'out', true, ''),
-            new DateContent(1, '9:00', '18:00', '1:00', 8, 'out', true, ''),
-            new DateContent(2, '6:00', '18:00', '1:00', 8, 'out', true, ''),
-            new DateContent(3, '9:00', '18:00', '1:00', 8, 'out', true, ''),
-            new DateContent(4, '9:00', '18:00', '1:00', 8, 'out', true, ''),
-            new DateContent(5, '9:00', '18:00', '1:00', 8, 'out', true, ''),
-            new DateContent(6, '9:00', '18:00', '1:00', 8, 'out', true, ''),
-            new DateContent(7, '9:00', '18:00', '1:00', 8, 'out', true, '')
-        ]),
-        new Schedule(
-        new Date(2019, 2, 8, 0, 0, 0, 0), [
-            new DateContent(0, '9:00', '18:00', '1:00', 8, 'out', false, ''),
-            new DateContent(1, '9:00', '18:00', '1:00', 8, 'out', false, ''),
-            new DateContent(2, '9:00', '18:00', '1:00', 8, 'out', false, ''),
-            new DateContent(3, '9:00', '18:00', '1:00', 8, 'out', false, ''),
-            new DateContent(4, '9:00', '18:00', '1:00', 8, 'out', false, ''),
-            new DateContent(5, '9:00', '18:00', '1:00', 8, 'out', false, ''),
-            new DateContent(6, '9:00', '18:00', '1:00', 8, 'out', false, ''),
-            new DateContent(7, '9:00', '18:00', '1:00', 8, 'out', false, '')
-        ]),
-        new Schedule(
-            new Date(2019, 2, 9, 0, 0, 0, 0), [
-            new DateContent(0, '9:00', '18:00', '1:00', 8, 'out', false, ''),
-            new DateContent(1, '9:00', '18:00', '1:00', 8, 'out', false, ''),
-            new DateContent(2, '9:00', '18:00', '1:00', 8, 'out', false, ''),
-            new DateContent(3, '9:00', '18:00', '1:00', 8, 'out', false, ''),
-            new DateContent(4, '9:00', '18:00', '1:00', 8, 'out', false, ''),
-            new DateContent(5, '9:00', '18:00', '1:00', 8, 'out', false, ''),
-            new DateContent(6, '9:00', '18:00', '1:00', 8, 'out', false, ''),
-            new DateContent(7, '9:00', '18:00', '1:00', 8, 'out', false, '')
-        ]),
-        new Schedule(
-            new Date(2019, 2, 10, 0, 0, 0, 0), [
-            new DateContent(0, '9:00', '18:00', '1:00', 8, 'out', false, ''),
-            new DateContent(1, '9:00', '18:00', '1:00', 8, 'out', false, ''),
-            new DateContent(2, '6:00', '18:00', '3:00', 8, 'out', false, ''),
-            new DateContent(3, '9:00', '18:00', '1:00', 8, 'out', false, ''),
-            new DateContent(4, '9:00', '18:00', '1:00', 8, 'out', false, ''),
-            new DateContent(5, '9:00', '18:00', '1:00', 8, 'out', false, ''),
-            new DateContent(6, '9:00', '18:00', '1:00', 8, 'out', false, ''),
-            new DateContent(7, '9:00', '18:00', '1:00', 8, 'out', false, '')
-        ])
-    ];
+    thursday = moment().isoWeekday(4);
+    yearWeek = {year: this.thursday.year(), week: this.thursday.isoWeek()};
+    
+    sched;
+    schedChanged = new Subject<[]>();
 
-    ngOnInit() {
-        // this.zeroDate = new Date(2019, 1, 25, 0, 0, 0, 0);
+    blankDay = {
+        break: '',
+        comment: '',
+        duration: 0,
+        in: '',
+        out: '',
+        type: 'Out',
+        workDay: false        
+    };
+
+    unsubscribe = () => {console.log('Unsubscribing...')};
+
+
+    constructor (
+        private statusService: StatusService,
+        private router: Router
+    ) {}
+
+    fetchWeek(thursday = this.thursday) {
+        thursday.isoWeekday(4);
+        const year = thursday.year();
+        this.yearWeek.year = year;
+        const week = thursday.isoWeek();
+        this.yearWeek.week = week;
+
+        this.unsubscribe();
+
+        let db = firebase.firestore();
+        this.unsubscribe = db.collection('schedule-' + year).where('week', '==', week).orderBy('weekday', 'asc')
+        .onSnapshot(
+            querySnapshot => {
+                let sched = [];
+                querySnapshot.forEach(
+                    doc => {
+                    sched.push(doc.data());
+                    }
+                );
+
+                if (sched.length < 1) {
+                    console.log('Kutak!');
+                    for (let i = 1; i < 8; i++) {
+                        let hours = 8;
+                        if (i > 5) {
+                            hours = 0;
+                        }
+                        sched.push({
+                            hours: hours,
+                            week: week,
+                            weekday: i
+                        });
+                    }
+                }
+                console.log('fetching sched', sched);
+                this.setSched(sched);
+            }
+        );
+
     }
+    updateUserWeek(monday: moment.Moment, data, id) {
+        let thursday = moment(monday).isoWeekday(4);
+        const mainYear = thursday.year();
+        const week = thursday.isoWeek();
 
-    getUserWeek(userId: number, date: Date) {
-        this.week = [];
-        let dateCopy = this.getDateCopy(date);
-        const dateDayAbs = dateCopy.getTime() / (1000 * 60 * 60 * 24);
-        const zeroDateDayAbs = this.zeroDate.getTime() / (1000 * 60 * 60 * 24);
-        console.log('dateDayAbs = ' + dateDayAbs);
-        console.log('zeroDateDayAbs = ' + zeroDateDayAbs);
-        const num = dateDayAbs - zeroDateDayAbs;
-        console.log('num = ' + num);
-        // const days = date - zeroDate;
-        const monday = dateDayAbs - num % 7;
-        dateCopy.setDate(dateCopy.getDate() - (num % 7 + 1));
-        console.log('date seted = ' + date);
-        console.log('monday = ' + monday);
-        const mondayId = monday - zeroDateDayAbs;
-        console.log('mondayId = ' + mondayId);
-        for (let i = 0; i < 7; i++) {
-            dateCopy.setDate(dateCopy.getDate() + 1);
-            console.log('date seted = ' + date);
-            const day = this.schedule[mondayId + i].dateContent[userId];
-            const userDay = {
-                day: dateCopy.getDate(),
-                month: dateCopy.getMonth(),
-                timeIn: day.timeIn,
-                timeOut: day.timeOut,
-                breakDuration: day.breakDuration,
-                duration: day.duration,
-                dayType: day.dayType,
-                workDay: day.workDay,
-                comment: day.comment,
-            };
-            this.week.push(userDay);
+        let sched = this.sched.slice();
+
+        let db = firebase.firestore();
+
+        data.forEach((day, i) => {
+            let year = monday.isoWeekday(i + 1).year();
+            let month = 1 + monday.isoWeekday(i + 1).month();
+            let date = monday.isoWeekday(i + 1).date();
+
+            sched[i]['wr' + id] = day;
+
+            db.collection('schedule-' + mainYear).doc('day-' + year + '-' + month + '-' + date)
+            .set(sched[i])
+            .then(() => {
+                console.log("Document successfully updated!");
+                this.router.navigate(['/profile/' + id + '/' + mainYear + '/' + week]);
+            });
+
+        });
+        console.log('Updated sched:', sched);
+    }
+    updateWeekParameters(monday: moment.Moment, data,) {
+        let thursday = moment(monday).isoWeekday(4);
+        const mainYear = thursday.year();
+        const week = thursday.isoWeek();
+
+        let sched = this.sched.slice();
+
+        let db = firebase.firestore();
+
+
+        data.forEach((day, i) => {
+            let year = monday.isoWeekday(i + 1).year();
+            let month = 1 + monday.isoWeekday(i + 1).month();
+            let date = monday.isoWeekday(i + 1).date();
+
+            sched[i].hours = day.hours;
+
+            db.collection('schedule-' + mainYear).doc('day-' + year + '-' + month + '-' + date)
+            .set(sched[i])
+            .then(() => {
+                console.log("Document successfully updated!");
+                this.router.navigate(['/settings/week/' + mainYear + '/' + week]);
+            });
+
+        });
+        console.log('Updated sched:', sched);
+
+    }
+    setSched(data) {
+        this.sched = data;
+        this.schedChanged.next(this.sched.slice());
+    }
+    getSched() {
+        return this.sched;
+    }
+    getSchedParameters() {
+        let sched = []
+        if (this.isAuthenticated && this.sched) {
+            this.sched.forEach(elem => {
+                sched.push({
+                    hours: elem.hours,
+                    week: elem.week,
+                    weekday: elem.weekday
+                })
+            });
         }
-        return this.week;
+        return sched;
     }
-    getDateCopy(date: Date) {
-        return new Date(
-            date.getFullYear(),
-            date.getMonth(),
-            date.getDate(),
-            date.getHours(),
-            date.getMinutes(),
-            date.getSeconds(),
-            date.getMilliseconds());
+    getUserSched(id) {
+        let userSched = [];
+        if (this.isAuthenticated && this.sched) {
+          this.sched.forEach(elem => {
+              if (elem['wr' + id]) {
+                userSched.push(elem['wr' + id]);
+              } else {
+                userSched.push(this.blankDay);
+              }
+          });
+        }
+        return userSched;
     }
-    getDayName(i) {
-        const dayNames = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
-        return dayNames[i];
+    getWeekHours(option, id = null) {
+      let hours = 0;
+      if (this.sched) {
+        if (option === 'hours') {
+            this.sched.forEach(elem => {
+                if (elem[option]) {
+                    hours += elem[option];
+                }
+            });
+        } else if (option === 'duration') {
+            this.sched.forEach(elem => {
+                if (elem['wr' + id]) {
+                    // if (elem['wr' + id][option]) {
+                        hours += elem['wr' + id][option];
+                    // }
+                }
+            });
+        }
+      }
+      return hours;
     }
+    isAuthenticated() {
+      return this.statusService.isAuthenticated();
+    }
+    isPastWeek() {
+        let currentWeek = moment().isoWeek();
+        let currentYear = moment().year();
+        if (currentYear > this.yearWeek.year) {
+            return true;
+        } else {
+            if (currentWeek > this.yearWeek.week) {
+                return true;
+            } else {
+                return false;
+            }
+        }
+    }
+    isBeforeCurrentMondayLunch() {
+        if (this.isPastWeek()) {
+            return false;
+        } else {
+            return moment()
+            .isBefore(moment().year(this.yearWeek.year).isoWeek(this.yearWeek.week).isoWeekday(1)
+            .hour(14).minute(0).second(0).millisecond(0));
+        }
+    }
+    
 }

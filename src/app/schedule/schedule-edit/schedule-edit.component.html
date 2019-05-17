@@ -1,36 +1,68 @@
-<br>
-<mat-form-field>
-  <mat-select placeholder="Day type">
-    <mat-option *ngFor="let dayType of dayTypes" [value]="dayType">
-      {{dayType}}
-    </mat-option>
-  </mat-select>
-</mat-form-field>
-<br>
-<mat-form-field>
-  <mat-select placeholder="In">
-    <mat-option *ngFor="let time of times" [value]="time.value">
-      {{time.viewValue}}
-    </mat-option>
-  </mat-select>
-</mat-form-field>
-<br>
-<mat-form-field>
-  <mat-select placeholder="Out">
-    <mat-option *ngFor="let time of times" [value]="time.value">
-      {{time.viewValue}}
-    </mat-option>
-  </mat-select>
-</mat-form-field>
-<br>
-<mat-form-field>
-  <mat-select placeholder="Lunch">
-    <mat-option *ngFor="let time of times" [value]="time.value">
-      {{time.viewValue}}
-    </mat-option>
-  </mat-select>
-</mat-form-field>
-<br>
-<mat-form-field>
-    <textarea matInput placeholder="Notes"></textarea>
-</mat-form-field>
+<div class="block-content" *ngIf="uLevel() <= 1 || uId() == id">
+
+  <form class="schedule-wrapper" [formGroup]="weekForm" (ngSubmit)="onSubmit()" *ngIf="isAuthenticated()">
+
+    <div class="content-toolbar">
+      <mat-form-field class="content-toolbar-item">
+        <input matInput [matDatepicker]="picker" placeholder="Jump to date" [formControl]=datePicker
+          (dateChange)="onDatepickerChange()">
+        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+        <mat-datepicker #picker></mat-datepicker>
+      </mat-form-field>
+      <p>{{ userWeekHours }} of {{ weekHours }} working hours in this week</p>
+      <div class="button-row content-toolbar-item">
+        <div>
+          <button mat-flat-button type="button" (click)="onCancel()">Cancel</button>
+          <button mat-flat-button color="primary" type="submit" style="margin-left: 10px">Save</button>
+        </div>
+      </div>
+
+    </div>
+
+    <div *ngFor="let day of userSched; let i = index" [class]="'schedule-day-block ' + 'schedule-day-block' + (i+1)"
+      [ngClass]="{'chosen': i === chosenDay}">
+      <div class="schedule-day-header">
+        <h3 class="week-day">{{ monday.isoWeekday(i + 1).format("dddd") }}</h3>
+        <h4 class="day">{{ monday.isoWeekday(i + 1).format("D MMM") }}.</h4>
+      </div>
+
+      <!-- HERE -->
+      <mat-form-field class="form-item timepicker">
+        <input placeholder="In" matInput [format]="24" min="06:00 am" max="11:00 pm" [ngxTimepicker]="timepickerIn"
+          [formControlName]="'in' + i">
+        <ngx-material-timepicker #timepickerIn [minutesGap]="30"></ngx-material-timepicker>
+      </mat-form-field>
+      <mat-form-field class="form-item timepicker">
+        <input placeholder="Out" matInput [format]="24" min="06:00 am" max="11:00 pm" [ngxTimepicker]="timepickerOut"
+          [formControlName]="'out' + i">
+        <ngx-material-timepicker #timepickerOut [minutesGap]="30"></ngx-material-timepicker>
+      </mat-form-field>
+      <mat-form-field class="form-item timepicker">
+        <input placeholder="Break" matInput [format]="24" min="00:00 am" max="4:00 pm" [ngxTimepicker]="timepickerBreak"
+          [formControlName]="'break' + i">
+        <ngx-material-timepicker #timepickerBreak [minutesGap]="30"></ngx-material-timepicker>
+      </mat-form-field>
+      <mat-form-field class="form-item dayType">
+        <mat-label>Day type</mat-label>
+        <mat-select id="dayType" [formControlName]="'type' + i">
+          <mat-option *ngFor="let dayType of sets.daytypes" [value]="dayType">
+            {{dayType}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+      <mat-form-field class="form-item comment">
+        <textarea matInput placeholder="Comment" rows="4" [formControlName]="'comment' + i">{{day.comment}}</textarea>
+      </mat-form-field>
+
+      <p *ngIf="day.workDay">{{ day.duration }} hours</p>
+
+    </div>
+
+    <div class="change-week change-week-left">
+      <mat-icon>chevron_left</mat-icon>
+    </div>
+    <div class="change-week change-week-right">
+      <mat-icon>chevron_right</mat-icon>
+    </div>
+  </form>
+</div>

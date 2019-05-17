@@ -1,4 +1,5 @@
-<form [formGroup]="profileForm" (ngSubmit)="onSubmit()" *ngIf="isAuthenticated()">
+
+<form [formGroup]="profileForm" (ngSubmit)="onSubmit()" *ngIf="isAuthenticated() && (uId() == id || uLevel() <= 1)">
   <div class="form-wrapper">
     <mat-form-field class="form-item birthday">
       <input matInput [matDatepicker]="datePicker" placeholder="Birthday" id="birthday" formControlName="birthday">

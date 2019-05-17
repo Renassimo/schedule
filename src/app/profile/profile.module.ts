@@ -17,11 +17,13 @@ import {
     MatDatepickerModule,
     MatChipsModule,
     MatListModule,
-    MatNativeDateModule
+    MatNativeDateModule,
+    MatBadgeModule
 } from '@angular/material';
 import { CommonModule } from "@angular/common";
 import { ProfileRoutingModule } from "./profile-routing.module";
 import { ReactiveFormsModule } from "@angular/forms";
+import {NgxMaterialTimepickerModule} from 'ngx-material-timepicker';
 
 @NgModule({
     declarations: [
@@ -47,7 +49,9 @@ import { ReactiveFormsModule } from "@angular/forms";
         MatPaginatorModule,
         MatChipsModule,
         MatListModule,
-        MatNativeDateModule
+        MatNativeDateModule,
+        NgxMaterialTimepickerModule,
+        MatBadgeModule
     ]
 })
 export class ProfileModule {}

@@ -4,6 +4,7 @@ import { MatTableDataSource, MatPaginator } from '@angular/material';
 import { User } from 'src/app/shared/user.model';
 import { Subscription } from 'rxjs';
 import { SettingsService } from '../settings.service';
+import { StatusService } from 'src/app/shared/status.service';
 
 @Component({
   selector: 'app-user',
@@ -22,7 +23,8 @@ export class UserComponent implements OnInit, OnDestroy {
 
   constructor(
     private usersService: UsersService,
-    private settingsService: SettingsService
+    private settingsService: SettingsService,
+    private statusService: StatusService
   ) { }
 
   ngOnInit() {
@@ -44,6 +46,12 @@ export class UserComponent implements OnInit, OnDestroy {
   }
   ngOnDestroy() {
     this.subscription.unsubscribe();
+  }
+  uLevel() {
+    return this.statusService.getULevel();
+  }
+  isAuthenticated() {
+    return this.statusService.isAuthenticated();
   }
 
 }

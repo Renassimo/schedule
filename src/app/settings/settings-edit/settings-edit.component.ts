@@ -110,6 +110,9 @@ export class SettingsEditComponent implements OnInit, OnDestroy {
     this.newSetItemForm = new FormControl(null, Validators.required);
     this.editSetItemForm = new FormControl(null, Validators.required);
   }
+  uLevel() {
+    return this.statusService.getULevel();
+  }
   isAuthenticated() {
     return this.statusService.isAuthenticated();
   }

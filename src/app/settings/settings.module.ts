@@ -22,6 +22,9 @@ import { UserComponent } from './user/user.component';
 import { SettingsEditComponent } from './settings-edit/settings-edit.component';
 
 import {DragDropModule} from '@angular/cdk/drag-drop';
+import { WeekComponent } from './week/week.component';
+import { WeekEditComponent } from './week/week-edit/week-edit.component';
+import { NgxMaterialTimepickerModule } from "ngx-material-timepicker";
 
 @NgModule({
     declarations: [
@@ -29,6 +32,8 @@ import {DragDropModule} from '@angular/cdk/drag-drop';
         UserEditComponent,
         UserComponent,
         SettingsEditComponent,
+        WeekComponent,
+        WeekEditComponent,
     ],
     imports: [
         CommonModule,
@@ -46,7 +51,8 @@ import {DragDropModule} from '@angular/cdk/drag-drop';
         MatChipsModule,
         MatListModule,
         MatSlideToggleModule,
-        DragDropModule
+        DragDropModule,
+        NgxMaterialTimepickerModule
     ]
 })
 export class SettingsModule {}

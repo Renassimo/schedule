@@ -8,7 +8,6 @@ const appRoutes: Routes = [
     {path: 'events', loadChildren: './events/events.module#EventsModule'},
     {path: 'settings', loadChildren: './settings/settings.module#SettingsModule'},
     {path: 'auth', loadChildren: './auth/auth.module#AuthModule'},
-
   ];
 
 @NgModule({

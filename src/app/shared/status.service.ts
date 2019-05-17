@@ -9,6 +9,12 @@ export class StatusService {
     insideComponent = false;
     authenticated = false;
     redirection = false;
+    uData = {
+      active: false,
+      id: null,
+      uid: null,
+      uLevel: 5
+    }
 
     constructor(private router: Router) {}
 
@@ -64,10 +70,17 @@ export class StatusService {
     protectOutside() {
         this.authenticated = true;
         this.redirection = false;
+        this.uData.uLevel = 5;
         if (!this.insideComponent) {
             console.log('Redirecting the outside component');
             // this.router.navigate(['']);
         }
+    }
+    getId() {
+        return this.uData.id;
+    }
+    getULevel() {
+        return this.uData.uLevel;
     }
 
 }
