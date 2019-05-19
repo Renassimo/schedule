@@ -10,7 +10,9 @@ import { WeekEditComponent } from './week/week-edit/week-edit.component';
 const settingsRoutes = [
     {path: '', component: SettingsComponent},
     {path: 'users', component: UserComponent},
+    {path: 'week', component: WeekComponent},
     {path: 'week/:year/:week', component: WeekComponent},
+    {path: 'week-edit', component: WeekEditComponent},
     {path: 'week-edit/:year/:week', component: WeekEditComponent},
     {path: 'user-edit/new', component: UserEditComponent},
     {path: 'user-edit/:id', component: UserEditComponent},

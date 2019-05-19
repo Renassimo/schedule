@@ -13,6 +13,7 @@ export class EventsComponent implements OnInit {
   ) { }
 
   ngOnInit() {
+    this.statusService.inside();
   }
   uLevel() {
     return this.statusService.getULevel();

@@ -18,20 +18,17 @@ export class LoginComponent implements OnInit {
 
 
   ngOnInit() {
+    this.statusService.outside();
     this.initForm();
-    // this.statusService.outside();
     // this.titleService.setTitle('My Flights - log in');
   }
   ngOnDestroy() {
-    // this.statusService.clearMessages();
   }
 
   onSignin() {
-    // this.statusService.clearMessages();
     const email = this.signinForm.value.email;
     const password = this.signinForm.value.password;
     console.log('Email: ' + email + '; Password: ' + password);
-    // this.statusService.clearMessages();
     this.authService.signinUser(email, password);
   }
 

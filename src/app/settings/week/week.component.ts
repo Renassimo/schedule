@@ -53,6 +53,7 @@ export class WeekComponent implements OnInit {
     ) { }
 
     ngOnInit() {
+      this.statusService.inside();
 
       this.route.params
       .subscribe(
@@ -101,6 +102,7 @@ export class WeekComponent implements OnInit {
   
       fetchWeek(date) {
         if (this.isAuthenticated()) {
+          this.statusService.spin();
           this.scheduleService.fetchWeek(date);
         } else {
           this.authService.changeDate(date);
@@ -118,6 +120,11 @@ export class WeekComponent implements OnInit {
         this.sched = this.scheduleService.getSchedParameters();
         console.log('Week Parameters:', this.sched);
         this.displayWeek();
+      }
+      onCopyWeek() {
+        this.scheduleService.coppiedWeekParametres = this.sched;
+        console.log('Coppied:', this.scheduleService.coppiedWeekParametres);
+        this.statusService.setMessage('Choosen week parameters copied!');
       }
   
       changeWeek(next) {

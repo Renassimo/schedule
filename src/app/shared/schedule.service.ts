@@ -15,7 +15,10 @@ export class ScheduleService {
     zeroDate = new Date(2019, 1, 25, 0, 0, 0, 0);
     thursday = moment().isoWeekday(4);
     yearWeek = {year: this.thursday.year(), week: this.thursday.isoWeek()};
-    
+
+    coppiedWeek;
+    coppiedWeekParametres;
+
     sched;
     schedChanged = new Subject<[]>();
 
@@ -51,6 +54,7 @@ export class ScheduleService {
         .onSnapshot(
             querySnapshot => {
                 let sched = [];
+                this.statusService.stopSpin();
                 querySnapshot.forEach(
                     doc => {
                     sched.push(doc.data());
@@ -73,7 +77,7 @@ export class ScheduleService {
                 }
                 console.log('fetching sched', sched);
                 this.setSched(sched);
-            }
+            }, error => this.statusService.detectError(error)
         );
 
     }
@@ -87,6 +91,7 @@ export class ScheduleService {
         let db = firebase.firestore();
 
         data.forEach((day, i) => {
+            this.statusService.spin();
             let year = monday.isoWeekday(i + 1).year();
             let month = 1 + monday.isoWeekday(i + 1).month();
             let date = monday.isoWeekday(i + 1).date();
@@ -96,9 +101,10 @@ export class ScheduleService {
             db.collection('schedule-' + mainYear).doc('day-' + year + '-' + month + '-' + date)
             .set(sched[i])
             .then(() => {
+                this.statusService.stopSpin();
                 console.log("Document successfully updated!");
                 this.router.navigate(['/profile/' + id + '/' + mainYear + '/' + week]);
-            });
+            }, error => this.statusService.detectError(error));
 
         });
         console.log('Updated sched:', sched);
@@ -123,9 +129,10 @@ export class ScheduleService {
             db.collection('schedule-' + mainYear).doc('day-' + year + '-' + month + '-' + date)
             .set(sched[i])
             .then(() => {
+                this.statusService.stopSpin();
                 console.log("Document successfully updated!");
                 this.router.navigate(['/settings/week/' + mainYear + '/' + week]);
-            });
+            }, error => this.statusService.detectError(error));
 
         });
         console.log('Updated sched:', sched);
@@ -176,9 +183,7 @@ export class ScheduleService {
         } else if (option === 'duration') {
             this.sched.forEach(elem => {
                 if (elem['wr' + id]) {
-                    // if (elem['wr' + id][option]) {
-                        hours += elem['wr' + id][option];
-                    // }
+                    hours += elem['wr' + id][option];
                 }
             });
         }

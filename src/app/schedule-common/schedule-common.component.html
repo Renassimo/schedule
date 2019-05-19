@@ -24,9 +24,9 @@
       <a mat-flat-button [color]="type == 'position' ? 'primary' : 'basic'"
         [routerLink]="'/schedule/position/' + year + '/' + week">Position</a>
     </div>
-    <div class="content-toolbar-item">
-      <!-- <span>Workers: 34 (39), 7:30 - 22:00</span> -->
-    </div>
+    <!-- <div class="content-toolbar-item">
+      <span>Workers: 34 (39), 7:30 - 22:00</span>
+    </div> -->
   </div>
 
   <br>
@@ -54,8 +54,9 @@
           <ng-container matColumnDef="worker">
             <th mat-header-cell *matHeaderCellDef class="worker-name"> Worker </th>
             <td mat-cell *matCellDef="let element" class="worker-name">
-              <a routerLink="/profile/{{element.id}}"> {{element.name}} {{element.surname}} </a> <br>
-              <i>{{element.tit1}}
+              <a [routerLink]="'/profile/' + element.id + '/' + year + '/' + week"> {{element.name}} {{element.surname}}
+              </a> <br class="non-mobile-view">
+              <i class="sub-table-text non-mobile-view">{{element.tit1}}
                 -
                 {{element.tit2}} ({{element.duration}} of
                 {{sched.hours}})</i>
@@ -63,12 +64,16 @@
           </ng-container>
 
           <ng-container [matColumnDef]="day" *ngFor="let day of dayColumns; let k = index">
-            <th mat-header-cell *matHeaderCellDef> {{ monday.isoWeekday(k + 1).format("dddd") }} <br>
-              {{ monday.isoWeekday(k + 1).format("D MMM") }}. </th>
+            <th mat-header-cell *matHeaderCellDef>
+              <span class="non-mobile-view"> {{ monday.isoWeekday(k + 1).format("dddd") }} <br>
+                {{ monday.isoWeekday(k + 1).format("D MMM") }}. </span>
+              <span class="mobile-view"> {{ monday.isoWeekday(k + 1).format("ddd") }}. <br>
+                {{ monday.isoWeekday(k + 1).format("D MM") }} </span></th>
             <td mat-cell *matCellDef="let element">
               <ng-template [ngIf]="element.schedule[k].workDay">
                 {{element.schedule[k].in}} - {{element.schedule[k].out}} <br>
-                <i>B: {{formatDuration(element.schedule[k].break)}} H: {{element.schedule[k].duration}}
+                <i class="sub-table-text">B: {{formatDuration(element.schedule[k].break)}} H:
+                  {{element.schedule[k].duration}}
                   <span *ngIf="element.schedule[k].type === 'WFH'" matBadge="H" matBadgeOverlap="false"
                     matBadgePosition="above after"></span>
                 </i>

@@ -44,6 +44,9 @@ mat-expansion-panel-header
         max-width: 250px
 .tabbed div.mat-expansion-panel-body
     padding: 0
+.compact div.mat-expansion-panel-body
+    @include media-breakpoint-down(md)
+        padding: 0 0 10px
 
 .form-fix-width
     .mat-form-field-flex
@@ -53,3 +56,41 @@ mat-expansion-panel-header
             // right: 21px
     .mat-form-field-underline
         // width: 170px !important
+
+
+table
+  @include media-breakpoint-down(xl)
+    td.mat-cell
+      padding: 0 3px
+  @include media-breakpoint-down(sm)
+    th.mat-header-cell
+      font-size: 11px
+    td.mat-cell
+      font-size: 12px
+      padding: 0 2px
+      i.sub-table-text
+          font-size: 10px
+    th.mat-header-cell:first-of-type, td.mat-cell:first-of-type
+      padding-left: 8px
+    th.mat-header-cell:last-of-type, td.mat-cell:last-of-type
+      padding-right: 8px
+  @include media-breakpoint-down(xs)
+    th.mat-header-cell
+      font-size: 10px
+      padding: 0 2px
+    td.mat-cell
+      font-size: 11px
+      padding: 0 1px
+      i.sub-table-text
+          font-size: 9px
+    th.mat-header-cell:first-of-type, td.mat-cell:first-of-type
+      padding-left: 4px
+    th.mat-header-cell:last-of-type, td.mat-cell:last-of-type
+      padding-right: 4px
+
+@include media-breakpoint-down(sm)
+    .non-mobile-view
+        display: none
+@include media-breakpoint-up(md)
+    .mobile-view
+        display: none

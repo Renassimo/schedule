@@ -61,6 +61,7 @@ export class WeekEditComponent implements OnInit, OnDestroy {
     ) { }
 
   ngOnInit() {
+    this.statusService.inside();
 
     this.route.params
     .subscribe(
@@ -116,6 +117,7 @@ export class WeekEditComponent implements OnInit, OnDestroy {
     this.realTimeUpdate = true;
   }
   onSubmit() {
+    this.statusService.spin();
     console.log('Submitted:', this.sched);
     console.log(moment(this.monday));
     this.scheduleService.updateWeekParameters(moment(this.monday.isoWeekday(1)), this.sched);
@@ -128,6 +130,7 @@ export class WeekEditComponent implements OnInit, OnDestroy {
   fetchWeek(date) {
     this.realTimeUpdate = true;
     if (this.isAuthenticated()) {
+      this.statusService.spin();
       this.scheduleService.fetchWeek(date);
     } else {
       this.authService.changeDate(date);
@@ -164,6 +167,19 @@ export class WeekEditComponent implements OnInit, OnDestroy {
       day.hours = sched[j];
     }) 
     this.displayWeek();
+  }
+  onPaste() {
+    let sched = this.scheduleService.coppiedWeekParametres;
+    sched.forEach(day => {
+      day.week = this.week;
+    })
+    this.sched = sched;
+    console.log('Paste:', sched);
+    this.initForm();
+    this.displayWeek();
+  }
+  coppiedWeek() {
+    return this.scheduleService.coppiedWeekParametres;
   }
   private initForm() {
     let controls = {};

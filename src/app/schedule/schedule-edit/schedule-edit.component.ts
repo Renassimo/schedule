@@ -127,8 +127,8 @@ export class ScheduleEditComponent implements OnInit, OnDestroy {
     this.realTimeUpdate = true;
   }
   onSubmit() {
+    this.statusService.spin();
     console.log('Submitted:', this.getUserWeek());
-    console.log(moment(this.monday));
     this.scheduleService.updateUserWeek(moment(this.monday.isoWeekday(1)), this.userSched, this.id);
     this.realTimeUpdate = true;
   }
@@ -139,6 +139,7 @@ export class ScheduleEditComponent implements OnInit, OnDestroy {
   fetchWeek(date) {
     this.realTimeUpdate = true;
     if (this.isAuthenticated()) {
+      this.statusService.spin();
       this.scheduleService.fetchWeek(date);
     } else {
       this.authService.changeDate(date);
@@ -171,6 +172,15 @@ export class ScheduleEditComponent implements OnInit, OnDestroy {
     this.userWeekHours = this.scheduleService.getWeekHours('duration', this.id);
     this.weekHours = this.scheduleService.getWeekHours('hours');
   }
+  onPaste() {
+    this.userSched = this.scheduleService.coppiedWeek;
+    console.log('Paste:', this.userSched);
+    this.initForm();
+    this.displayWeek();
+  }
+  coppiedWeek() {
+    return this.scheduleService.coppiedWeek;
+  }
   getUserWeek(value = this.weekForm.value) {
     let data = [];
     let weekDuration = 0;
@@ -197,9 +207,6 @@ export class ScheduleEditComponent implements OnInit, OnDestroy {
     }
     this.userWeekHours = weekDuration;
     return data;
-  }
-  onDatepickerChange() {
-
   }
   private initForm() {
     let controls = {};

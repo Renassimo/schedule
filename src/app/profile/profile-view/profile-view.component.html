@@ -3,7 +3,7 @@
     <mat-panel-title>Profile</mat-panel-title>
     <mat-panel-description *ngIf="profile && user">
       <span>{{user.name}} {{user.surname}}</span>
-      <img src="{{profile.image}}" alt="{{user.name}} {{user.surname}}" class="header-photo">
+      <img *ngIf="avatar" [src]="avatar" alt="{{user.name}} {{user.surname}}" class="header-photo">
     </mat-panel-description>
   </mat-expansion-panel-header>
 
@@ -18,7 +18,7 @@
     </div>
 
     <div class="contact-photo sub-block">
-      <img src="{{profile.image}}" alt="{{user.name}} {{user.surname}}" class="profile-photo">
+      <img *ngIf="avatar" [src]="avatar" alt="{{user.name}} {{user.surname}}" class="profile-photo">
     </div>
 
     <div class="contact-content sub-block">

@@ -13,7 +13,6 @@ export class Profile {
     public eduType: string;
     public engLevel: string;
     public skills: string[];
-    public image: string;
 
     constructor(
         id: number,
@@ -26,7 +25,6 @@ export class Profile {
         eduType: string,
         engLevel: string,
         skills: string[],
-        image: string,
         ) {
             this.id = id;
             this.birthday = birthday;
@@ -38,7 +36,6 @@ export class Profile {
             this.eduType = eduType;
             this.engLevel = engLevel;
             this.skills = skills;
-            this.image = image;
         }
 
 }

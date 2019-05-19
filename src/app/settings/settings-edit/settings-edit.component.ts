@@ -33,6 +33,7 @@ export class SettingsEditComponent implements OnInit, OnDestroy {
   ) { }
 
   ngOnInit() {
+    this.statusService.inside();
 
     this.route.params
     .subscribe(
@@ -81,6 +82,7 @@ export class SettingsEditComponent implements OnInit, OnDestroy {
     }
   }
   onSave() {
+    this.statusService.spin();
     this.settingsService.updateSetting(this.setName, this.set);
   }
   onAdd() {

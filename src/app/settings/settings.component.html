@@ -1,14 +1,15 @@
 <ng-template [ngIf]="isAuthenticated() && uLevel() <= 1">
+  <div class="settings-wrapper">
 
-<a routerLink="/settings/users">users</a><br>
-<a routerLink="/settings/edit/edutypes">edutypes</a><br>
-<a routerLink="/settings/edit/englevels">englevels</a><br>
-<a routerLink="/settings/edit/positions">positions</a><br>
-<a routerLink="/settings/edit/rooms">rooms</a><br>
-<a routerLink="/settings/edit/teams">teams</a><br>
-<a routerLink="/settings/edit/bookgenres">bookgenres</a><br>
-<a routerLink="/settings/edit/daytypes">daytypes</a><br>
-<a routerLink="/settings/week/2019/20">Week</a><br>
-<a routerLink="/settings/week-edit/2019/20">Week edit</a><br>
+    <a routerLink="/settings/week"><mat-icon>event_available</mat-icon><span>Weeks</span></a>
+    <a routerLink="/settings/users"><mat-icon>account_circle</mat-icon><span>Users</span></a>
+    <a routerLink="/settings/edit/teams"><mat-icon>group</mat-icon><span>Teams</span></a>
+    <a routerLink="/settings/edit/positions"><mat-icon>work</mat-icon><span>Positions</span></a>
+    <a routerLink="/settings/edit/rooms"><mat-icon>meeting_room</mat-icon><span>Rooms</span></a>
+    <a routerLink="/settings/edit/bookgenres"><mat-icon>book</mat-icon><span>Book Genres</span></a>
+    <a routerLink="/settings/edit/daytypes"><mat-icon>filter_7</mat-icon><span>Day types</span></a>
+    <a routerLink="/settings/edit/edutypes"><mat-icon>school</mat-icon><span>Education types</span></a>
+    <a routerLink="/settings/edit/englevels"><mat-icon>language</mat-icon><span>Eglish levels</span></a>
 
+  </div>
 </ng-template>

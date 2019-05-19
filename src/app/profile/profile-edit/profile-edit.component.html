@@ -68,13 +68,11 @@
           [matChipInputAddOnBlur]="chips.addOnBlur" (matChipInputTokenEnd)="add($event)">
       </mat-chip-list>
     </mat-form-field>
-    <mat-form-field class="form-item image">
-      <input matInput type="text" placeholder="Image" id="image" formControlName="image">
-      <button mat-button matSuffix mat-icon-button *ngIf="profileForm.value.image" aria-label="Clear"
-        (click)="onClearInput('image')">
-        <mat-icon>close</mat-icon>
-      </button>
-    </mat-form-field>
+    <button mat-flat-button class="form-item avatar-download" color="accent" type="button" (click)="fileInput.click()">
+      <span>Upload avatar</span>
+      <mat-icon>add_photo_alternate</mat-icon>
+      <input #fileInput type="file" (change)="onFileChange($event)" style="display:none;" />
+    </button>
     <button class="form-item button" mat-flat-button (click)="onCancel()" color="warn">Cancel</button>
     <button class="form-item button" mat-flat-button type="submit" [disabled]="profileForm.invalid"
       color="primary">Save</button>

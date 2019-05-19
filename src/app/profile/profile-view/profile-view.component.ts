@@ -6,8 +6,6 @@ import { Subscription } from 'rxjs';
 import { StatusService } from 'src/app/shared/status.service';
 import { User } from 'src/app/shared/user.model';
 import { UsersService } from 'src/app/shared/users.service';
-import * as moment from 'moment';
-// import { MatExpansionPanel } from '@angular/material';
 
 @Component({
   selector: 'app-profile-view',
@@ -19,8 +17,11 @@ export class ProfileViewComponent implements OnInit, OnDestroy {
   user: User;
   profile: Profile;
   usersSubscription: Subscription;
+  avatarSubscription: Subscription;
   profileSubscription: Subscription;
   idFromParams = false;
+  avatar = null;
+  uid = null;
 
   constructor(
     private route: ActivatedRoute,
@@ -41,8 +42,6 @@ export class ProfileViewComponent implements OnInit, OnDestroy {
           this.idFromParams = false;
           this.setId();
         }
-        // this.id = +params['id'];
-        // this.profileService.fetchProfile(this.id);
         this.setProfile();
       }
     );
@@ -50,35 +49,40 @@ export class ProfileViewComponent implements OnInit, OnDestroy {
       (users: User[]) => {
         this.setId();
         this.user = users[this.id];
-        // console.log('User:', this.user);
+        this.uid = this.user.uid;
+        this.setAvatar();
+      }
+    );
+    this.avatarSubscription = this.usersService.avatarChanged.subscribe(
+      (avatar) => {
+        this.avatar = avatar;
       }
     );
     this.profileSubscription = this.profileService.profileChanged.subscribe(
       (profile: Profile) => {
         this.profile = profile;
-        // console.log('proof:', this.profile);
-      // console.log('Profile:', this.profile);
       }
     );
 
-
-    // this.setProfile();
-    // this.user = this.profileService.getUser(this.id);
-    // console.log(this.user);
   }
   ngOnDestroy() {
     this.usersSubscription.unsubscribe();
+    this.avatarSubscription.unsubscribe();
     this.profileSubscription.unsubscribe();
   }
   setProfile() {
     if (this.isAuthenticated) {
       this.profileService.fetchProfile(this.id);
       this.user = this.usersService.getUser(this.id);
-      // console.log('Profile:', this.profile);
-      // console.log('User:', this.user);
+      if (this.user) {
+        this.uid = this.user.uid;
+      }
+      this.setAvatar();
     } else {
       this.profile = null;
       this.user = null;
+      this.uid = null;
+      this.avatar = null;
     }
   }
   setId() {
@@ -95,6 +99,12 @@ export class ProfileViewComponent implements OnInit, OnDestroy {
   }
   isAuthenticated() {
     return this.statusService.isAuthenticated();
+  }
+  setAvatar() {
+    if (this.uid) {
+      console.log('UID:', this.uid);
+      this.usersService.downloadAvatar(this.uid);
+    }
   }
 
 }

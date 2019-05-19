@@ -1,14 +1,27 @@
+
+// Bootstrap breakpoints
+@import "../../shared/mixins/_functions.scss"
+@import "../../shared/mixins/_variables.scss"
+@import "../../shared/mixins/_breakpoints.scss"
+
 .content-toolbar
     display: flex
-    justify-content: space-between
-    grid-column: 2 / 9
+    justify-content: space-around
+    flex-wrap: wrap
+    align-items: center
+    padding: 0 25px
+    grid-column: 1 / 10
     grid-row: 1
+    @include media-breakpoint-down(xs)
+        grid-column: 1 / 4
 .schedule-wrapper
     text-align: center
     display: grid
     grid-template-columns: auto auto auto auto auto auto auto auto auto
     grid-template-rows: auto auto
-    // column-gap: 10px
+    @include media-breakpoint-down(xs)
+        grid-template-columns: auto auto auto
+        grid-template-rows: auto auto auto auto auto auto auto auto
     .change-week
         display: grid
         grid-template-rows: 1fr auto 1fr
@@ -22,42 +35,63 @@
         grid-column: 1
         grid-row: 2
         grid-template-columns: auto 1fr
+        @include media-breakpoint-down(xs)
+            grid-column: 1
+            grid-row: 2 / 9
         mat-icon
             grid-column: 1
     .change-week-right
         grid-column: 9
         grid-row: 2
         grid-template-columns: 1fr auto
+        @include media-breakpoint-down(xs)
+            grid-column: 3
+            grid-row: 2 / 9
         mat-icon
             grid-column: 2
     .schedule-day-block1
         grid-column: 2
-        grid-row: 2
+        @include media-breakpoint-down(xs)
+            grid-row: 2
     .schedule-day-block2
         grid-column: 3
-        grid-row: 2
+        @include media-breakpoint-down(xs)
+            grid-row: 3
     .schedule-day-block3
         grid-column: 4
-        grid-row: 2
+        @include media-breakpoint-down(xs)
+            grid-row: 4
     .schedule-day-block4
         grid-column: 5
-        grid-row: 2
+        @include media-breakpoint-down(xs)
+            grid-row: 5
     .schedule-day-block5
         grid-column: 6
-        grid-row: 2
+        @include media-breakpoint-down(xs)
+            grid-row: 6
     .schedule-day-block6
         grid-column: 7
-        grid-row: 2
+        @include media-breakpoint-down(xs)
+            grid-row: 7
     .schedule-day-block7
         grid-column: 8
-        grid-row: 2
+        @include media-breakpoint-down(xs)
+            grid-row: 8
     .schedule-day-block
+        @include media-breakpoint-up(sm)
+            grid-row: 2
+        @include media-breakpoint-down(xs)
+            grid-column: 2
         .day
             margin-bottom: 0
         .day-time-block
             &.w-day
                 display: grid
                 grid-template-columns: 1fr auto 10px auto 1fr
+                @include media-breakpoint-down(sm)
+                    grid-template-columns: 1fr auto 3px auto 1fr
+                @include media-breakpoint-down(xs)
+                    grid-template-columns: 1fr auto 10px auto 1fr
                 .type-names-column
                     text-align: center
                     grid-column: 2
@@ -81,8 +115,6 @@
 .button-row
     display: flex
     justify-content: flex-end
-    button, a
-        height: 35px
 
 
 .block-content

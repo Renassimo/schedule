@@ -48,24 +48,19 @@ export class AuthService {
         });
     }
     authenticate() {
-        // this.statusService.spin();
-        // this.statusService.clearMessages();
+        this.statusService.spin();
         firebase.auth().currentUser.getIdToken()
         .then(
             (token: string) => {
-                // if (this.isVerified()) {
-                    // this.statusService.stopSpin();
+                    this.statusService.stopSpin();
                     this.token = token;
                     this.uid = this.getUID();
-                    // this.setData();
-                    // this.dataStorageServiceGet.getFlights(this.token, this.uid);
                     this.usersService.fetchUsers();
                     this.settingsService.fetchSettings();
                     this.setWeek();
-                // }
                 this.statusService.protectOutside();
             }
-        ).catch(error => this.detectError(error));
+        ).catch(error => this.statusService.detectError(error));
     }
     setWeek() {
         if (this.date) {
@@ -80,8 +75,6 @@ export class AuthService {
     unAuthenticate() {
         this.token = null;
         this.uid = null;
-        // this.uData = null;
-        // this.flightsService.dismissFlights();
         this.statusService.protectInside();
     }
     logout() {
@@ -91,28 +84,16 @@ export class AuthService {
     getUID() {
         return this.uid = firebase.auth().currentUser.uid;
     }
-    detectError(error) {
-        // this.statusService.stopSpin();
-        console.log(error);
-        console.log(error.code);
-        console.log(error.message);
-        // this.statusService.setErrorMessage(error.message);
-    }
-    detectResponse(response) {
-        // this.statusService.stopSpin();
-        console.log(response);
-    }
     signinUser(email: string, password: string) {
-        // this.statusService.spin();
+        this.statusService.spin();
         console.log('Current user before:');
         console.log(firebase.auth().currentUser);
         firebase.auth().signInWithEmailAndPassword(email, password)
         .then(response => {
-            this.detectResponse(response);
-            // this.statusService.setSuccessMessage('You are logging in');
+            this.statusService.stopSpin();
             this.router.navigate(['/profile']);
         })
-        .catch(error => this.detectError(error));
+        .catch(error => this.statusService.detectError(error));
     }
 
 }

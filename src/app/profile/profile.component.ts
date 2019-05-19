@@ -1,7 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
-import { Profile } from '../shared/profile.model';
-import { ProfileService } from '../shared/profile.service';
 import { StatusService } from '../shared/status.service';
 
 @Component({
@@ -11,18 +8,13 @@ import { StatusService } from '../shared/status.service';
 })
 export class ProfileComponent implements OnInit {
 
-  // userId: number;
-  // user: Profile;
 
-  constructor(private route: ActivatedRoute,
-    private profileService: ProfileService,
+  constructor(
     private statusService: StatusService
     ) { }
 
   ngOnInit() {
-    // this.userId = this.route.snapshot.params['id'];
-    // this.user = this.profileService.getUser(this.userId);
-    // console.log(this.user);
+    this.statusService.inside();
   }
   isAuthenticated() {
     return this.statusService.isAuthenticated();

@@ -12,7 +12,9 @@ export class SettingsComponent implements OnInit {
     private statusService: StatusService
   ) { }
 
-  ngOnInit() {}
+  ngOnInit() {
+    this.statusService.inside();
+  }
   uLevel() {
     return this.statusService.getULevel();
   }

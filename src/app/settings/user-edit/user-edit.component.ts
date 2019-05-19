@@ -7,7 +7,6 @@ import { ActivatedRoute, Params, Router } from '@angular/router';
 import { StatusService } from 'src/app/shared/status.service';
 import { SettingsService } from '../settings.service';
 import { ProfileService } from 'src/app/shared/profile.service';
-import { Profile } from 'src/app/shared/profile.model';
 
 @Component({
   selector: 'app-user-edit',
@@ -32,7 +31,6 @@ export class UserEditComponent implements OnInit, OnDestroy {
     faculty: '',
     grade: '',
     id: 99999,
-    image: '',
     skills: [],
     tel: '',
     university: ''
@@ -48,6 +46,7 @@ export class UserEditComponent implements OnInit, OnDestroy {
   ) { }
 
   ngOnInit() {
+    this.statusService.inside();
 
     this.usersSubscription = this.usersService.usersChanged.subscribe(
       (users: User[]) => {
@@ -57,7 +56,6 @@ export class UserEditComponent implements OnInit, OnDestroy {
     this.settingsSubscription = this.settingsService.settingsChanged.subscribe(
       (settings) => {
         this.sets = settings;
-        // this.detectSetting();
       }
     );
     this.detectSetting();
@@ -68,13 +66,9 @@ export class UserEditComponent implements OnInit, OnDestroy {
       (params: Params) => {
         this.id = +params['id'];
         this.editMode = params['id'] != null;
-        // console.log('edit mode:', this.editMode);
-        // console.log(params['id']);
         this.initForm();
       }
     );
-    // console.log('Flight Edit component inited!');
-    // console.log(this.userForm);
 
   }
   ngOnDestroy() {
@@ -93,6 +87,7 @@ export class UserEditComponent implements OnInit, OnDestroy {
 
 
   onSubmit() {
+    this.statusService.spin();
 
     if (this.editMode) {
 
@@ -139,7 +134,6 @@ export class UserEditComponent implements OnInit, OnDestroy {
     let uid = '';
 
     if (this.editMode && this.isAuthenticated()) {
-    // if (this.editMode) {
       const user = this.usersService.getUser(this.id);
 
       active = user.active;

@@ -1,10 +1,9 @@
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
+import { Subject } from 'rxjs';
 
 @Injectable()
 export class StatusService {
-    errorMessage: string;
-    successMessage: string;
     spinner = false;
     insideComponent = false;
     authenticated = false;
@@ -15,24 +14,19 @@ export class StatusService {
       uid: null,
       uLevel: 5
     }
+    messageChanged = new Subject<string>();
 
     constructor(private router: Router) {}
 
-    setErrorMessage(message: string) {
-        this.errorMessage = message;
+    detectError(error) {
+        this.stopSpin();
+        console.log(error);
+        console.log(error.code);
+        console.log(error.message);
+        this.setMessage(error.message);
     }
-    setSuccessMessage(message: string) {
-        this.successMessage = message;
-    }
-    clearMessages() {
-        this.errorMessage = '';
-        this.successMessage = '';
-    }
-    getErrorMessage() {
-        return this.errorMessage;
-    }
-    getSuccessMessage() {
-        return this.successMessage;
+    setMessage(message: string) {
+        this.messageChanged.next(message);
     }
     spin() {
         this.spinner = true;
@@ -46,7 +40,6 @@ export class StatusService {
     showSpinner() {
       return (!this.isAuthenticated() && !this.isRedirecting()) || this.isSpinning();
     }
-
     isAuthenticated() {
         return this.authenticated;
     }
@@ -64,7 +57,7 @@ export class StatusService {
         this.redirection = true;
         if (this.insideComponent) {
             console.log('Redirecting the inside component');
-            // this.router.navigate(['']);
+            this.router.navigate(['/auth/login']);
         }
     }
     protectOutside() {
@@ -73,7 +66,7 @@ export class StatusService {
         this.uData.uLevel = 5;
         if (!this.insideComponent) {
             console.log('Redirecting the outside component');
-            // this.router.navigate(['']);
+            this.router.navigate(['/profile']);
         }
     }
     getId() {

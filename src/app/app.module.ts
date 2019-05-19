@@ -15,11 +15,11 @@ import { UsersService } from './shared/users.service';
 import { AuthService } from './auth/auth.service';
 import { StatusService } from './shared/status.service';
 import { SettingsService } from './settings/settings.service';
-import { MatSidenavModule, MatListModule, MatButtonModule, MatTooltipModule } from '@angular/material';
+import { MatSidenavModule, MatListModule, MatButtonModule, MatTooltipModule, MatProgressBarModule, MatSnackBarModule } from '@angular/material';
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
   ],
   imports: [
     BrowserModule,
@@ -31,7 +31,9 @@ import { MatSidenavModule, MatListModule, MatButtonModule, MatTooltipModule } fr
     MatSidenavModule,
     MatListModule,
     MatButtonModule,
-    MatTooltipModule
+    MatTooltipModule,
+    MatProgressBarModule,
+    MatSnackBarModule
   ],
   providers: [ProfileService, UsersService, ScheduleService, AuthService, StatusService, SettingsService],
   bootstrap: [AppComponent]

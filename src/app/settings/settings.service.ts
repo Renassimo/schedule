@@ -3,6 +3,7 @@ import * as firebase from 'firebase/app';
 import 'firebase/firestore';
 import { Subject } from "rxjs";
 import { Router } from "@angular/router";
+import { StatusService } from "../shared/status.service";
 
 @Injectable()
 export class SettingsService {
@@ -17,6 +18,7 @@ export class SettingsService {
     ];
 
     constructor(
+        private statusService: StatusService,
         private router: Router
     ) {}
 
@@ -32,7 +34,7 @@ export class SettingsService {
                     }
                 );
                 this.setSettings(settings);
-            }
+            }, error => this.statusService.detectError(error)
         );
     }
 
@@ -42,10 +44,11 @@ export class SettingsService {
             values: data
         })
         .then(() => {
+            this.statusService.stopSpin();
             console.log('Document successfully written!');
             this.router.navigate(['/settings']);
         })
-        .catch((error) => console.error('Error writing document: ', error));
+        .catch((error) => this.statusService.detectError(error));
 
     }
 

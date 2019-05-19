@@ -11,7 +11,8 @@
       </mat-form-field>
       <p>{{ userWeekHours }} of {{ weekHours }} working hours in this week</p>
       <div class="button-row content-toolbar-item">
-        <a mat-stroked-button
+        <button mat-flat-button type="button" (click)="onCopyWeek()">Copy</button>
+        <a mat-flat-button color="primary"
           *ngIf="uLevel() <= 1 || (uLevel() <= 2 && !isPastWeek()) || (uId() == id && isBeforeCurrentMondayLunch())"
           [routerLink]="'/profile/' + id + '/' + year + '/' + week + '/' + 'edit'">Edit</a>
       </div>
@@ -21,7 +22,8 @@
     <div *ngFor="let day of userSched; let i = index" [class]="'schedule-day-block ' + 'schedule-day-block' + (i+1)"
       [ngClass]="{'chosen': monday.isoWeekday(i + 1).isSame(today, 'day')}">
       <div class="schedule-day-header">
-        <h3 class="week-day">{{ monday.isoWeekday(i + 1).format("dddd") }}</h3>
+        <h3 class="week-day mobile-view">{{ monday.isoWeekday(i + 1).format("ddd") }}.</h3>
+        <h3 class="week-day non-mobile-view">{{ monday.isoWeekday(i + 1).format("dddd") }}</h3>
         <h4 class="day">{{ monday.isoWeekday(i + 1).format("D MMM") }}.
           <span *ngIf="day.type === 'WFH'" matBadge="H" matBadgeOverlap="false" matBadgePosition="above after"></span>
         </h4>

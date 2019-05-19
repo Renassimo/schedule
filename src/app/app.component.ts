@@ -6,6 +6,7 @@ import { UsersService } from './shared/users.service';
 import { User } from './shared/user.model';
 import { Subscription } from 'rxjs';
 import { StatusService } from './shared/status.service';
+import { MatSnackBar } from '@angular/material';
 
 @Component({
   selector: 'app-root',
@@ -51,9 +52,9 @@ export class AppComponent implements OnInit, OnDestroy {
 
 
   links = [
-      {text: 'Dashboard', link: '/', icon: 'dashboard', level: 3, needAuth: true},
+      {text: 'Dashboard', link: '/', icon: 'dashboard', level: 0, needAuth: true},
       {text: 'Profile', link: '', icon: 'account_circle', level: 3, needAuth: true},
-      {text: 'Schedule', link: '/schedule', icon: 'event_note', level: 3, needAuth: true},
+      {text: 'Schedule', link: '/schedule/team', icon: 'event_note', level: 3, needAuth: true},
       {text: 'Events', link: '/events', icon: 'event_available', level: 0, needAuth: true},
       {text: 'Books', link: '/books', icon: 'book', level: 0, needAuth: true},
       {text: 'Settings', link: '/settings', icon: 'settings', level: 1, needAuth: true},
@@ -61,6 +62,8 @@ export class AppComponent implements OnInit, OnDestroy {
     ];
     users: User[];
     usersSubscription: Subscription;
+    message;
+    messageSubscription: Subscription;
 
 
   constructor(
@@ -69,8 +72,9 @@ export class AppComponent implements OnInit, OnDestroy {
     private authService: AuthService,
     private usersService: UsersService,
     private statusService: StatusService,
+    private snackBar: MatSnackBar
   ) {
-    this.mobileQuery = media.matchMedia('(max-width: 576px)');
+    this.mobileQuery = media.matchMedia('(max-width: 768px)');
     this._mobileQueryListener = () => changeDetectorRef.detectChanges();
     this.mobileQuery.addListener(this._mobileQueryListener);
   }
@@ -79,7 +83,8 @@ export class AppComponent implements OnInit, OnDestroy {
     console.log('App component inited!');
     this.authService.initAuthentication();
 
-    this.usersSubscription = this.usersService.usersChanged.subscribe(
+    this.usersSubscription = this.usersService.usersChanged
+    .subscribe(
       () => {
         if (this.isAuthenticated) {
           this.uData = this.usersService.getUData(this.authService.uid);
@@ -87,6 +92,14 @@ export class AppComponent implements OnInit, OnDestroy {
           this.links[1].link = '/profile/' + this.uData.id;
           console.log('Level:', this.statusService.uData.uLevel);
         }
+      }
+    );
+    this.messageSubscription = this.statusService.messageChanged
+    .subscribe(
+      (message) => {
+        this.message = message;
+        console.log('Mes in App', this.message);
+        this.openSnackBar();
       }
     );
 
@@ -114,9 +127,19 @@ export class AppComponent implements OnInit, OnDestroy {
     }
 
   }
+  openSnackBar() {
+    if (this.message) {
+      this.snackBar.open(this.message, 'Ok', {
+        duration: 9000
+      });
+    }
+  }
 
   isAuthenticated() {
     return this.statusService.isAuthenticated();
+  }
+  showSpinner() {
+    return this.statusService.showSpinner();
   }
 
 }

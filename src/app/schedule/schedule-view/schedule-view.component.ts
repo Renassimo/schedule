@@ -63,7 +63,6 @@ export class ScheduleViewComponent  implements OnInit, OnDestroy {
     this.route.params
     .subscribe(
       (params: Params) => {
-        // let year, week;
         let time = moment().isoWeekday(4);
         if (params['id']) {
           this.idFromParams = true;
@@ -72,7 +71,6 @@ export class ScheduleViewComponent  implements OnInit, OnDestroy {
           this.idFromParams = false;
           this.setId();
         }
-        // this.id = +params['id'];
 
         if (params['year'] && params['week']) {
 
@@ -121,6 +119,7 @@ export class ScheduleViewComponent  implements OnInit, OnDestroy {
 
     fetchWeek(date) {
       if (this.isAuthenticated()) {
+        this.statusService.spin();
         this.scheduleService.fetchWeek(date);
       } else {
         this.authService.changeDate(date);
@@ -159,6 +158,11 @@ export class ScheduleViewComponent  implements OnInit, OnDestroy {
       } else {
         this.router.navigate(['/profile/' + this.id + '/' + year + '/' + week]);
       }
+    }
+    onCopyWeek() {
+      this.scheduleService.coppiedWeek = this.userSched;
+      console.log('Coppied:', this.scheduleService.coppiedWeek);
+      this.statusService.setMessage('Choosen week copied!');
     }
     setId() {
       if (this.isAuthenticated && !this.idFromParams) {

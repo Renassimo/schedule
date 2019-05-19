@@ -68,38 +68,33 @@ export class ProfileEditComponent implements OnInit, OnDestroy {
     ) {}
 
   ngOnInit() {
+    this.statusService.inside();
 
     this.route.params
     .subscribe(
       (params: Params) => {
         this.id = +params['id'];
-        // this.profileService.fetchProfile(this.id);
         this.setProfile();
-        // this.initForm();
       }
     );
     this.usersSubscription = this.usersService.usersChanged.subscribe(
       (users: User[]) => {
         this.user = users[this.id];
-        // console.log('User:', this.user);
       }
     );
     this.profileSubscription = this.profileService.profileChanged.subscribe(
       (profile: Profile) => {
         this.profile = profile;
-      // console.log('Profile:', this.profile);
       this.initForm();
       }
     );
     this.settingsSubscription = this.settingsService.settingsChanged.subscribe(
       (settings) => {
         this.sets = settings;
-        // this.detectSetting();
       }
     );
     this.setProfile();
     this.detectSetting();
-    // this.initForm();
     
   }
   ngOnDestroy() {
@@ -112,8 +107,6 @@ export class ProfileEditComponent implements OnInit, OnDestroy {
     if (this.isAuthenticated) {
       this.profileService.fetchProfile(this.id);
       this.user = this.usersService.getUser(this.id);
-      // console.log('Profile:', this.profile);
-      // console.log('User:', this.user);
     } else {
       this.profile = null;
       this.user = null;
@@ -121,6 +114,7 @@ export class ProfileEditComponent implements OnInit, OnDestroy {
     }
   }
   onSubmit() {
+    this.statusService.spin();
     this.profileForm.value.skills = this.skills;
     this.profileForm.value.id = this.id;
     this.profileForm.value.birthday = this.profileForm.value.birthday.format();
@@ -129,6 +123,11 @@ export class ProfileEditComponent implements OnInit, OnDestroy {
   }
   onCancel() {
     this.router.navigate(['/profile/' + this.id]);
+  }
+  onFileChange(event) {
+    if(event.target.files && event.target.files.length) {
+      this.usersService.uploadAvatar(event, this.user.uid);
+    }
   }
   detectSetting() {
     if (this.isAuthenticated()) {
@@ -142,7 +141,6 @@ export class ProfileEditComponent implements OnInit, OnDestroy {
     let birthday: moment.Moment;
     let email = '';
     let faculty = '';
-    let image = '';
     let tel = '';
     let university = '';
     let grade = '';
@@ -157,7 +155,6 @@ export class ProfileEditComponent implements OnInit, OnDestroy {
       birthday = profile.birthday;
       email = profile.email;
       faculty = profile.faculty;
-      image = profile.image;
       tel = profile.tel;
       university = profile.university;
       grade = profile.grade;
@@ -171,7 +168,6 @@ export class ProfileEditComponent implements OnInit, OnDestroy {
       'birthday': new FormControl(birthday, Validators.required),
       'email': new FormControl(email, Validators.required),
       'faculty': new FormControl(faculty),
-      'image': new FormControl(image),
       'tel': new FormControl(tel),
       'university': new FormControl(university),
       'grade': new FormControl(grade),

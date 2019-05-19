@@ -28,6 +28,7 @@ export class UserComponent implements OnInit, OnDestroy {
   ) { }
 
   ngOnInit() {
+    this.statusService.inside();
 
     this.subscription = this.usersService.usersChanged.subscribe(
       (users: User[]) => {

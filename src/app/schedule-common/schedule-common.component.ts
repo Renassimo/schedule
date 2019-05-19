@@ -66,6 +66,7 @@ export class ScheduleCommonComponent implements OnInit, OnDestroy {
     ) { }
 
   ngOnInit() {
+    this.statusService.inside();
 
     this.route.params.subscribe((params: Params) => {
 
@@ -83,8 +84,8 @@ export class ScheduleCommonComponent implements OnInit, OnDestroy {
         this.year = +params['year'];
         this.week = +params['week'];
       } else {
-        this.year = null;
-        this.week = null;
+        this.year = moment().isoWeekday(4).year();
+        this.week = moment().isoWeekday(4).isoWeek();
       }
       console.log('Params:', this.type, this.year, this.week);
       this.setParams();
@@ -141,6 +142,7 @@ export class ScheduleCommonComponent implements OnInit, OnDestroy {
   }
   fetchWeek(date) {
     if (this.isAuthenticated()) {
+      this.statusService.spin();
       this.scheduleService.fetchWeek(date);
     } else {
       this.authService.changeDate(date);
