@@ -122,7 +122,7 @@ export class WeekComponent implements OnInit {
         this.displayWeek();
       }
       onCopyWeek() {
-        this.scheduleService.coppiedWeekParametres = this.sched;
+        this.scheduleService.coppiedWeekParametres = this.sched.slice();
         console.log('Coppied:', this.scheduleService.coppiedWeekParametres);
         this.statusService.setMessage('Choosen week parameters copied!');
       }

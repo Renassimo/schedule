@@ -160,7 +160,7 @@ export class ScheduleViewComponent  implements OnInit, OnDestroy {
       }
     }
     onCopyWeek() {
-      this.scheduleService.coppiedWeek = this.userSched;
+      this.scheduleService.coppiedWeek = this.userSched.slice();
       console.log('Coppied:', this.scheduleService.coppiedWeek);
       this.statusService.setMessage('Choosen week copied!');
     }

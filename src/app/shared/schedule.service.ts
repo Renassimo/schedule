@@ -55,9 +55,11 @@ export class ScheduleService {
             querySnapshot => {
                 let sched = [];
                 this.statusService.stopSpin();
+                console.log(querySnapshot);
                 querySnapshot.forEach(
                     doc => {
                     sched.push(doc.data());
+                    console.log(doc);
                     }
                 );
 

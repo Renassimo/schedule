@@ -169,7 +169,7 @@ export class WeekEditComponent implements OnInit, OnDestroy {
     this.displayWeek();
   }
   onPaste() {
-    let sched = this.scheduleService.coppiedWeekParametres;
+    let sched = this.scheduleService.coppiedWeekParametres.slice();
     sched.forEach(day => {
       day.week = this.week;
     })

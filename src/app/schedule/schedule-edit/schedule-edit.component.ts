@@ -173,7 +173,7 @@ export class ScheduleEditComponent implements OnInit, OnDestroy {
     this.weekHours = this.scheduleService.getWeekHours('hours');
   }
   onPaste() {
-    this.userSched = this.scheduleService.coppiedWeek;
+    this.userSched = this.scheduleService.coppiedWeek.slice();
     console.log('Paste:', this.userSched);
     this.initForm();
     this.displayWeek();
