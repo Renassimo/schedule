@@ -15,14 +15,7 @@ export class AuthService {
 
     date;
 
-    firebaseConfig = {
-        apiKey: 'AIzaSyA8ThV1o_69uZPNRUae18IZWkqQH1plAbU',
-        authDomain: 'zi-schedule.firebaseapp.com',
-        databaseURL: 'https://zi-schedule.firebaseio.com',
-        projectId: 'zi-schedule',
-        storageBucket: 'zi-schedule.appspot.com',
-        messagingSenderId: '864122784394'
-    };
+    firebaseConfig = {};
 
     constructor(
         private statusService: StatusService,

@@ -29,7 +29,7 @@ export class User {
             this.position = position;
             this.room = room;
             this.uLevel = uLevel;
-            this.active = active
+            this.active = active;
         }
 
 }
