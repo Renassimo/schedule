@@ -37,17 +37,14 @@ export class WeekEditComponent implements OnInit, OnDestroy {
   monday = moment().isoWeekday(1);
   weekForm: FormGroup;
   datePicker: FormControl;
-  // durations = [];
+  private subscriptions = new Subscription();
   
   weekHours;
 
-  // id;
   year;
   week;
 
-  // userSched = [];
   sched = [];
-  schedSubscription: Subscription;
 
   realTimeUpdate = true;
   
@@ -56,7 +53,6 @@ export class WeekEditComponent implements OnInit, OnDestroy {
     private router: Router,
     private scheduleService: ScheduleService,
     private statusService: StatusService,
-    private settingsService: SettingsService,
     private authService: AuthService
     ) { }
 
@@ -100,20 +96,20 @@ export class WeekEditComponent implements OnInit, OnDestroy {
       }
     );
 
-    this.schedSubscription = this.scheduleService.schedChanged.subscribe(
+    this.subscriptions.add(this.scheduleService.schedChanged.subscribe(
       () => {
         if (this.realTimeUpdate) {
           this.setSched();
           this.realTimeUpdate = false;
         }
       }
-    );
+    ));
 
     this.setSched();
 
   }
   ngOnDestroy() {
-    this.schedSubscription.unsubscribe();
+    this.subscriptions.unsubscribe();
     this.realTimeUpdate = true;
   }
   onSubmit() {

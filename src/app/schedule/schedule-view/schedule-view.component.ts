@@ -44,8 +44,7 @@ export class ScheduleViewComponent  implements OnInit, OnDestroy {
   monday = moment().isoWeekday(1);
   today = moment();
 
-  usersSubscription: Subscription;
-  schedSubscription: Subscription;
+  private subscriptions = new Subscription();
   userSched = [];
   idFromParams = false;
 
@@ -99,22 +98,22 @@ export class ScheduleViewComponent  implements OnInit, OnDestroy {
         this.datePicker = new FormControl(this.monday);
       }
     );
-    this.usersSubscription = this.usersService.usersChanged.subscribe(
+    this.subscriptions.add(this.usersService.usersChanged.subscribe(
       () => {
         this.setId();
       }
-    );
+    ));
 
-    this.schedSubscription = this.scheduleService.schedChanged.subscribe(
+    this.subscriptions.add(this.scheduleService.schedChanged.subscribe(
       () => {
         this.setUserSched(this.id);
       }
-    );
+    ));
 
     }
     
     ngOnDestroy() {
-      this.schedSubscription.unsubscribe();
+      this.subscriptions.unsubscribe();
     }
 
     fetchWeek(date) {

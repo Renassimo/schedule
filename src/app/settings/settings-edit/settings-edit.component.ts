@@ -23,7 +23,7 @@ export class SettingsEditComponent implements OnInit, OnDestroy {
 
   newSetItemForm: FormControl;
   editSetItemForm: FormControl;
-  subscription: Subscription;
+  private subscriptions = new Subscription();
 
   constructor(
     private settingsService: SettingsService,
@@ -49,18 +49,18 @@ export class SettingsEditComponent implements OnInit, OnDestroy {
 
     this.sets = this.settingsService.settings;
 
-    this.subscription = this.settingsService.settingsChanged.subscribe(
+    this.subscriptions.add(this.settingsService.settingsChanged.subscribe(
       (settings) => {
         this.sets = settings;
         this.detectSetting();
       }
-    );
+    ));
 
     this.detectSetting();
     this.initFormControls();
   }
   ngOnDestroy() {
-    this.subscription.unsubscribe();
+    this.subscriptions.unsubscribe();
   }
 
   drop(event: CdkDragDrop<string[]>) {

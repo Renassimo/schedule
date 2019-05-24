@@ -40,15 +40,13 @@ export class ScheduleCommonComponent implements OnInit, OnDestroy {
   dayColumns = ['mo', 'tu', 'we', 'th', 'fr', 'sa', 'su'];
 
   datePicker: FormControl;
+  private subscriptions = new Subscription();
   type: string;
   year: number;
   week: number;
   sched;
-  schedSubscription: Subscription;
   users: User[];
-  usersSubscription: Subscription;
   sets;
-  setsSubscription: Subscription;
 
   typedSched;
 
@@ -91,29 +89,29 @@ export class ScheduleCommonComponent implements OnInit, OnDestroy {
       this.setParams();
     });
 
-    this.schedSubscription = this.scheduleService.schedChanged.subscribe(
+    this.subscriptions.add(this.scheduleService.schedChanged.subscribe(
       () => {
         this.setSched();
       }
-    );
+    ));
 
-    this.usersSubscription = this.usersService.usersChanged.subscribe(
+    this.subscriptions.add(this.usersService.usersChanged.subscribe(
       () => {
         this.setUsers();
       }
-    );
-    this.setsSubscription = this.settingsService.settingsChanged.subscribe(
+    ));
+    this.subscriptions.add(this.settingsService.settingsChanged.subscribe(
       () => {
         this.detectSetting();
       }
-    );
+    ));
 
     this.setUsers();
     this.detectSetting();
 
   }
   ngOnDestroy() {
-    this.schedSubscription.unsubscribe();
+    this.subscriptions.unsubscribe();
   }
   setParams() {
     let time = moment().isoWeekday(4);

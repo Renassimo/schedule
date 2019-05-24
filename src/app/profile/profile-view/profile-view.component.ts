@@ -16,10 +16,6 @@ export class ProfileViewComponent implements OnInit, OnDestroy {
   id: number;
   user: User;
   profile: Profile;
-  // usersSubscription: Subscription;
-  // avatarSubscription: Subscription;
-  // profileSubscription: Subscription;
-  // subscriptions: Subscription[];
   private subscriptions = new Subscription();
   idFromParams = false;
   avatar = null;
@@ -56,40 +52,18 @@ export class ProfileViewComponent implements OnInit, OnDestroy {
         this.setAvatar();
       }
     ));
-    // this.usersSubscription = this.usersService.usersChanged.subscribe(
-    //   (users: User[]) => {
-    //     this.setId();
-    //     this.user = users[this.id];
-    //     this.uid = this.user.uid;
-    //     this.setAvatar();
-    //   }
-    // );
     this.subscriptions.add(this.usersService.avatarChanged.subscribe(
       (avatar) => {
         this.avatar = avatar;
       }
     ));
-    // this.avatarSubscription = this.usersService.avatarChanged.subscribe(
-    //   (avatar) => {
-    //     this.avatar = avatar;
-    //   }
-    // );
     this.subscriptions.add(this.profileService.profileChanged.subscribe(
       (profile: Profile) => {
         this.profile = profile;
       }
     ));
-    // this.profileSubscription = this.profileService.profileChanged.subscribe(
-    //   (profile: Profile) => {
-    //     this.profile = profile;
-    //   }
-    // );
-
   }
   ngOnDestroy() {
-    // this.usersSubscription.unsubscribe();
-    // this.avatarSubscription.unsubscribe();
-    // this.profileSubscription.unsubscribe();
     this.subscriptions.unsubscribe();
   }
   setProfile() {

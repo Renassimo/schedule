@@ -16,13 +16,12 @@ export class ScheduleComponent implements OnInit, OnDestroy {
 
   id;
   user: User;
-  usersSubscription: Subscription;
+  private subscriptions = new Subscription();
   idFromParams = false;
 
   constructor(
     private route: ActivatedRoute,
     private usersService: UsersService,
-    private scheduleService: ScheduleService,
     private statusService: StatusService
   ) { }
 
@@ -43,17 +42,17 @@ export class ScheduleComponent implements OnInit, OnDestroy {
       }
     );
 
-    this.usersSubscription = this.usersService.usersChanged.subscribe(
+    this.subscriptions.add(this.usersService.usersChanged.subscribe(
       (users: User[]) => {
         this.setId();
         this.user = users[this.id];
         // console.log('User:', this.user);
       }
-    );
+    ));
 
   }
   ngOnDestroy() {
-    this.usersSubscription.unsubscribe();
+    this.subscriptions.unsubscribe();
   }
 
   setUser() {

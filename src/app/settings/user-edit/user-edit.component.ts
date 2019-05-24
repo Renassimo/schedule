@@ -19,8 +19,7 @@ export class UserEditComponent implements OnInit, OnDestroy {
   uLevels = [];
 
   editMode = false;
-  usersSubscription: Subscription;
-  settingsSubscription: Subscription;
+  private subscriptions = new Subscription();
   userForm: FormGroup;
   id: number;
   profileBlank = {
@@ -48,16 +47,16 @@ export class UserEditComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this.statusService.inside();
 
-    this.usersSubscription = this.usersService.usersChanged.subscribe(
+    this.subscriptions.add(this.usersService.usersChanged.subscribe(
       (users: User[]) => {
         this.initForm();
       }
-    );
-    this.settingsSubscription = this.settingsService.settingsChanged.subscribe(
+    ));
+    this.subscriptions.add(this.settingsService.settingsChanged.subscribe(
       (settings) => {
         this.sets = settings;
       }
-    );
+    ));
     this.detectSetting();
     this.uLevels = this.settingsService.uLevels;
 
@@ -72,8 +71,7 @@ export class UserEditComponent implements OnInit, OnDestroy {
 
   }
   ngOnDestroy() {
-    this.usersSubscription.unsubscribe();
-    this.settingsSubscription.unsubscribe();
+    this.subscriptions.unsubscribe();
   }
 
 

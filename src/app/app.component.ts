@@ -49,6 +49,7 @@ export class AppComponent implements OnInit, OnDestroy {
   }
   
   private _mobileQueryListener: () => void;
+  private subscriptions = new Subscription();
 
 
   links = [
@@ -61,9 +62,7 @@ export class AppComponent implements OnInit, OnDestroy {
       {text: 'Log in', link: '/auth/login', icon: 'input', level: 5, needAuth: false}
     ];
     users: User[];
-    usersSubscription: Subscription;
     message;
-    messageSubscription: Subscription;
 
 
   constructor(
@@ -83,7 +82,7 @@ export class AppComponent implements OnInit, OnDestroy {
     console.log('App component inited!');
     this.authService.initAuthentication();
 
-    this.usersSubscription = this.usersService.usersChanged
+    this.subscriptions.add(this.usersService.usersChanged
     .subscribe(
       () => {
         if (this.isAuthenticated) {
@@ -93,19 +92,20 @@ export class AppComponent implements OnInit, OnDestroy {
           console.log('Level:', this.statusService.uData.uLevel);
         }
       }
-    );
-    this.messageSubscription = this.statusService.messageChanged
+    ));
+    this.subscriptions.add(this.statusService.messageChanged
     .subscribe(
       (message) => {
         this.message = message;
         console.log('Mes in App', this.message);
         this.openSnackBar();
       }
-    );
+    ));
 
   }
   ngOnDestroy(): void {
     this.mobileQuery.removeListener(this._mobileQueryListener);
+    this.subscriptions.unsubscribe();
   }
   onLogout() {
     this.authService.logout();

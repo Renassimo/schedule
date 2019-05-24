@@ -14,7 +14,7 @@ import { StatusService } from 'src/app/shared/status.service';
 export class UserComponent implements OnInit, OnDestroy {
   displayedColumns = ['id', 'name', 'team', 'position', 'level'];
   dataSource: MatTableDataSource<User>;
-  subscription: Subscription;
+  private subscriptions = new Subscription();
   dataLength;
   uLevels = [];
   users: User[];
@@ -30,13 +30,13 @@ export class UserComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this.statusService.inside();
 
-    this.subscription = this.usersService.usersChanged.subscribe(
+    this.subscriptions.add(this.usersService.usersChanged.subscribe(
       (users: User[]) => {
         this.dataSource = new MatTableDataSource<User>(users);
         this.dataSource.paginator = this.paginator;
         this.dataLength = this.dataSource.filteredData.length;
       }
-    );
+    ));
 
 
     this.uLevels = this.settingsService.uLevels;
@@ -46,7 +46,7 @@ export class UserComponent implements OnInit, OnDestroy {
     this.dataLength = this.dataSource.filteredData.length;
   }
   ngOnDestroy() {
-    this.subscription.unsubscribe();
+    this.subscriptions.unsubscribe();
   }
   uLevel() {
     return this.statusService.getULevel();

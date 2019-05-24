@@ -36,7 +36,7 @@ export class ScheduleEditComponent implements OnInit, OnDestroy {
 
 
   sets = {};
-  settingsSubscription: Subscription;
+  private subscriptions = new Subscription();
   monday = moment().isoWeekday(1);
   today = moment();
   weekForm: FormGroup;
@@ -51,7 +51,6 @@ export class ScheduleEditComponent implements OnInit, OnDestroy {
   week;
 
   userSched = [];
-  schedSubscription: Subscription;
 
   realTimeUpdate = true;
   
@@ -103,27 +102,26 @@ export class ScheduleEditComponent implements OnInit, OnDestroy {
       }
     );
 
-    this.schedSubscription = this.scheduleService.schedChanged.subscribe(
+    this.subscriptions.add(this.scheduleService.schedChanged.subscribe(
       () => {
         if (this.realTimeUpdate) {
           this.setUserSched(this.id);
           this.realTimeUpdate = false;
         }
       }
-    );
-    this.settingsSubscription = this.settingsService.settingsChanged.subscribe(
+    ));
+    this.subscriptions.add(this.settingsService.settingsChanged.subscribe(
       (settings) => {
         this.sets = settings;
       }
-    );
+    ));
 
     this.setUserSched(this.id);
     this.detectSetting();
 
   }
   ngOnDestroy() {
-    this.schedSubscription.unsubscribe();
-    this.settingsSubscription.unsubscribe();
+    this.subscriptions.unsubscribe();
     this.realTimeUpdate = true;
   }
   onSubmit() {

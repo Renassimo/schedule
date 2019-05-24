@@ -43,9 +43,7 @@ export class ProfileEditComponent implements OnInit, OnDestroy {
   id: number;
   user: User;
   profile: Profile;
-  usersSubscription: Subscription;
-  profileSubscription: Subscription;
-  settingsSubscription: Subscription;
+  private subscriptions = new Subscription();
   profileForm: FormGroup;
   sets = {};
 
@@ -77,30 +75,28 @@ export class ProfileEditComponent implements OnInit, OnDestroy {
         this.setProfile();
       }
     );
-    this.usersSubscription = this.usersService.usersChanged.subscribe(
+    this.subscriptions.add(this.usersService.usersChanged.subscribe(
       (users: User[]) => {
         this.user = users[this.id];
       }
-    );
-    this.profileSubscription = this.profileService.profileChanged.subscribe(
+    ));
+    this.subscriptions.add(this.profileService.profileChanged.subscribe(
       (profile: Profile) => {
         this.profile = profile;
       this.initForm();
       }
-    );
-    this.settingsSubscription = this.settingsService.settingsChanged.subscribe(
+    ));
+    this.subscriptions.add(this.settingsService.settingsChanged.subscribe(
       (settings) => {
         this.sets = settings;
       }
-    );
+    ));
     this.setProfile();
     this.detectSetting();
     
   }
   ngOnDestroy() {
-    this.usersSubscription.unsubscribe();
-    this.profileSubscription.unsubscribe();
-    this.settingsSubscription.unsubscribe();
+    this.subscriptions.unsubscribe();
   }
 
   setProfile() {

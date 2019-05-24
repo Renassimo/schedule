@@ -41,7 +41,7 @@ export class WeekComponent implements OnInit {
   monday = moment().isoWeekday(1);
   today = moment();
 
-  schedSubscription: Subscription;
+  private subscriptions = new Subscription();
   sched = [];
 
   constructor(
@@ -88,16 +88,16 @@ export class WeekComponent implements OnInit {
         }
       );
   
-      this.schedSubscription = this.scheduleService.schedChanged.subscribe(
+      this.subscriptions.add(this.scheduleService.schedChanged.subscribe(
         () => {
           this.setSched();
         }
-      );
+      ));
   
       }
       
       ngOnDestroy() {
-        this.schedSubscription.unsubscribe();
+        this.subscriptions.unsubscribe();
       }
   
       fetchWeek(date) {
